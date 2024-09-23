@@ -51,7 +51,7 @@ public class FilmController {
 
         if (film.getReleaseDate() == null || validReleaseDate(film.getReleaseDate())) {
             log.warn("Дата релиза не введена");
-            throw new ConditionNotMetException("Дата релиза не долнжна быть пустой");
+            throw new ConditionNotMetException("Дата релиза не должна быть пустой");
         }
 
         if (film.getDuration() != null) {
@@ -123,8 +123,8 @@ public class FilmController {
     }
 
     private boolean validReleaseDate(LocalDate date) {
-        if (date.isBefore(CINEMA_BIRTH)) {
-            return true;
+        if (date.isAfter(CINEMA_BIRTH)) {
+            return false;
         } else {
             log.warn("Дата релиза фильма раньше {}: {}", CINEMA_BIRTH, date);
             throw new ConditionNotMetException("Дата не может быть раньше 28.12.1985");
