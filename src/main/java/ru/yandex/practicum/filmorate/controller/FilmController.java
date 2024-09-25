@@ -80,12 +80,13 @@ public class FilmController {
 
         Film oldFilm = films.get(film.getId());
 
-        if (film.getName() != null && !film.getName().isBlank()) {
+        if (film.getName() != null && !film.getName().isBlank() && !oldFilm.getName().equals(film.getName())) {
             log.debug("Замена старого названия фильма {} на новое {}", oldFilm.getName(), film.getName());
             oldFilm.setName(film.getName());
         }
 
-        if (film.getDescription() != null && !film.getDescription().isBlank()) {
+        if (film.getDescription() != null && !film.getDescription().isBlank() &&
+                !oldFilm.getDescription().equals(film.getDescription())) {
             if (film.getDescription().length() > 200) {
                 log.warn("Длинна описание превышает 200 символов: {}", film.getDescription().length());
                 throw new ConditionNotMetException("Длинна описания не должна быть больше 200 символов");
@@ -96,7 +97,8 @@ public class FilmController {
             }
         }
 
-        if (film.getReleaseDate() != null && validReleaseDate(film.getReleaseDate())) {
+        if (film.getReleaseDate() != null && !oldFilm.getReleaseDate().equals(film.getReleaseDate()) &&
+                validReleaseDate(film.getReleaseDate())) {
             log.debug("Замена старой даты релиза фильма {} на новую {}",
                     oldFilm.getReleaseDate(), film.getReleaseDate());
             oldFilm.setReleaseDate(film.getReleaseDate());

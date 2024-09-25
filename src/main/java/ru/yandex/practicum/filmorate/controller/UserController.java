@@ -93,7 +93,7 @@ public class UserController {
 
         User oldUser = users.get(user.getId());
 
-        if (user.getLogin() != null && !user.getLogin().isBlank()) {
+        if (user.getLogin() != null && !user.getLogin().isBlank() && !oldUser.getLogin().equals(user.getLogin())) {
             if (user.getLogin().contains(" ")) {
                 log.warn("Догин содержит пробелы: {}", user.getLogin());
                 throw new ConditionNotMetException("Логин не должен содержать пробелы");
@@ -106,15 +106,17 @@ public class UserController {
             }
         }
 
-        if (user.getName() == null || user.getName().isBlank()) {
-            log.debug("Имя не введено, замена старого имени {} на логин: {}", oldUser.getName(), user.getLogin());
-            oldUser.setName(user.getLogin());
-        } else {
-            log.debug("Замена страого имени {} на новое {}", oldUser.getName(), user.getName());
-            oldUser.setName(user.getName());
+        if (!oldUser.getName().equals(user.getName())) {
+            if (user.getName() == null || user.getName().isBlank()) {
+                log.debug("Имя не введено, замена старого имени {} на логин: {}", oldUser.getName(), user.getLogin());
+                oldUser.setName(user.getLogin());
+            } else {
+                log.debug("Замена страого имени {} на новое {}", oldUser.getName(), user.getName());
+                oldUser.setName(user.getName());
+            }
         }
 
-        if (user.getEmail() != null && !user.getEmail().isBlank()) {
+        if (user.getEmail() != null && !user.getEmail().isBlank() && !oldUser.getEmail().equals(user.getEmail())) {
             if (!user.getEmail().contains("@")) {
                 log.warn("Имейл не содержит \"@\": {}", user.getEmail());
                 throw new ConditionNotMetException("Имейл должен содержать символ \"@\"");
@@ -127,7 +129,7 @@ public class UserController {
             }
         }
 
-        if (user.getBirthday() != null) {
+        if (user.getBirthday() != null && !oldUser.getBirthday().equals(user.getBirthday())) {
             if (user.getBirthday().isAfter(LocalDate.now())) {
                 log.warn("Дата рожденеия введена в будущем: {}", user.getBirthday());
                 throw new ConditionNotMetException("Дата рождения не должна быть в будущем");
