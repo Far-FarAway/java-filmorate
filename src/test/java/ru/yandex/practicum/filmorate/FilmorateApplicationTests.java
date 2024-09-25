@@ -23,7 +23,7 @@ class FilmorateApplicationTests {
     }
 
     @Test
-    void ShouldThrowExceptionWithEmptyFilmField() {
+    void shouldThrowExceptionWithEmptyFilmField() {
         Film film = new Film();
         FilmController controller = new FilmController();
 
@@ -44,7 +44,7 @@ class FilmorateApplicationTests {
     }
 
     @Test
-    void ShouldThrowExceptionWithWrongDescription() {
+    void shouldThrowExceptionWithWrongDescription() {
         Film film = new Film();
         film.setName("F");
         film.setDescription("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" +
@@ -55,7 +55,7 @@ class FilmorateApplicationTests {
     }
 
     @Test
-    void ShouldThrowExceptionWithWrongDate() {
+    void shouldThrowExceptionWithWrongDate() {
         Film film = new Film();
         film.setName("F");
         film.setDescription("F");
@@ -66,7 +66,7 @@ class FilmorateApplicationTests {
     }
 
     @Test
-    void ShouldThrowExceptionWithWrongDuration() {
+    void shouldThrowExceptionWithWrongDuration() {
         Film film = new Film();
         film.setName("F");
         film.setDescription("F");
@@ -78,7 +78,7 @@ class FilmorateApplicationTests {
     }
 
     @Test
-    void ShouldThrowExceptionWithEmptyUserField() {
+    void shouldThrowExceptionWithEmptyUserField() {
         User user = new User();
         UserController controller = new UserController();
 
@@ -95,7 +95,7 @@ class FilmorateApplicationTests {
     }
 
     @Test
-    void ShouldThrowExceptionWithLoginWithSpace() {
+    void shouldThrowExceptionWithLoginWithSpace() {
         User user = new User();
         user.setLogin("F F");
         Throwable thrown = assertThrows(ConditionNotMetException.class, () -> new UserController().postUser(user));
@@ -103,7 +103,7 @@ class FilmorateApplicationTests {
     }
 
     @Test
-    void ShouldThrowExceptionWithDuplicateLogin() {
+    void shouldThrowExceptionWithDuplicateLogin() {
         User user1 = new User();
         UserController controller = new UserController();
         user1.setLogin("F");
@@ -117,7 +117,7 @@ class FilmorateApplicationTests {
     }
 
     @Test
-    void ShouldThrowExceptionWithEmailWithoutSpecialSign() {
+    void shouldThrowExceptionWithEmailWithoutSpecialSign() {
         User user = new User();
         user.setLogin("F");
         user.setEmail("FFF");
@@ -126,7 +126,7 @@ class FilmorateApplicationTests {
     }
 
     @Test
-    void ShouldThrowExceptionWithDuplicateEmail() {
+    void shouldThrowExceptionWithDuplicateEmail() {
         User user1 = new User();
         UserController controller = new UserController();
         user1.setLogin("F");
@@ -141,7 +141,7 @@ class FilmorateApplicationTests {
     }
 
     @Test
-    void ShouldThrowExceptionWithWrongBirthday() {
+    void shouldThrowExceptionWithWrongBirthday() {
         User user = new User();
         user.setLogin("F");
         user.setEmail("F@F");
