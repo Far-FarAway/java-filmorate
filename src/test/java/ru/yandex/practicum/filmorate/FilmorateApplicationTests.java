@@ -13,7 +13,6 @@ import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.exception.ConditionNotMetException;
 
 import java.time.LocalDate;
-import java.time.Duration;
 
 @SpringBootTest
 class FilmorateApplicationTests {
@@ -37,10 +36,6 @@ class FilmorateApplicationTests {
         film.setDescription("F");
         thrown = assertThrows(ConditionNotMetException.class, () -> controller.postFilm(film));
         assertTrue(thrown.getMessage().contains("Дата релиза не должна быть пустой"));
-
-        film.setReleaseDate(LocalDate.now());
-        thrown = assertThrows(ConditionNotMetException.class, () -> controller.postFilm(film));
-        assertTrue(thrown.getMessage().contains("Продолжительность фильма не должна быть пустой"));
     }
 
     @Test
@@ -71,7 +66,7 @@ class FilmorateApplicationTests {
         film.setName("F");
         film.setDescription("F");
         film.setReleaseDate(LocalDate.now());
-        film.setDuration(Duration.ofMinutes((long) -1));
+        film.setDuration(-1);
 
         Throwable thrown = assertThrows(ConditionNotMetException.class, () -> new FilmController().postFilm(film));
         assertTrue(thrown.getMessage().contains("Продолжительность фильма не должна быть меньше нуля"));

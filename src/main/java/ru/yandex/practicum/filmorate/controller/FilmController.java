@@ -54,14 +54,9 @@ public class FilmController {
             throw new ConditionNotMetException("Дата релиза не должна быть пустой");
         }
 
-        if (film.getDuration() != null) {
-            if (film.getDuration().isNegative()) {
-                log.warn("Продолжительность фмльма отрицательна: {}", film.getDuration());
-                throw new ConditionNotMetException("Продолжительность фильма не должна быть меньше нуля");
-            }
-        } else {
-            log.warn("Продолжительность фильма не введена");
-            throw new ConditionNotMetException("Продолжительность фильма не должна быть пустой");
+        if (film.getDuration() < 0) {
+            log.warn("Продолжительность фмльма отрицательна: {}", film.getDuration());
+            throw new ConditionNotMetException("Продолжительность фильма не должна быть меньше нуля");
         }
 
         int id = ControllerUtility.getNextId(films.keySet());
@@ -107,8 +102,8 @@ public class FilmController {
             oldFilm.setReleaseDate(film.getReleaseDate());
         }
 
-        if (film.getDuration() != null) {
-            if (film.getDuration().isPositive()) {
+        if (oldFilm.getDuration() != film.getDuration()) {
+            if (film.getDuration() >= 0) {
                 log.debug("Замена старой продолжительности фильма {} на новую {}",
                         oldFilm.getDuration(), film.getDuration());
                 oldFilm.setDuration(film.getDuration());
@@ -117,6 +112,7 @@ public class FilmController {
                 throw new ConditionNotMetException("Продолжительность фильма не должна быть меньше нуля");
             }
         }
+
 
         log.info("Фильм {} с id {} успешно обновлен", oldFilm.getName(), oldFilm.getId());
         return oldFilm;
