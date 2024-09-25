@@ -11,10 +11,10 @@ public class ControllerUtility {
     public static boolean isDuplicate(Map<Integer, User> map, String value) {
         Optional<User> duplicate = map.values().stream()
                 .filter(person -> {
-                    if(value.contains("@")) {
+                    if (value.contains("@")) {
                         return person.getEmail().equals(value);
                     } else {
-                        return person.getLogin().equals((value));
+                        return person.getLogin().equals(value);
                     }
                 }).findAny();
 

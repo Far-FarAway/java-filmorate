@@ -116,14 +116,14 @@ public class UserController {
 
         if (user.getEmail() != null && !user.getEmail().isBlank()) {
             if (!user.getEmail().contains("@")) {
-                 log.warn("Имейл не содержит \"@\": {}", user.getEmail());
-                 throw new ConditionNotMetException("Имейл должен содержать символ \"@\"");
+                log.warn("Имейл не содержит \"@\": {}", user.getEmail());
+                throw new ConditionNotMetException("Имейл должен содержать символ \"@\"");
             } else if (ControllerUtility.isDuplicate(users, user.getEmail())) {
-                 log.warn("Имейл {} занят другим пользователем", user.getEmail());
-                 throw new ConditionNotMetException("Имейл уже используется");
+                log.warn("Имейл {} занят другим пользователем", user.getEmail());
+                throw new ConditionNotMetException("Имейл уже используется");
             } else {
-                 log.debug("Замена старого имейла {} на новый {}", oldUser.getEmail(), user.getEmail());
-                 oldUser.setEmail(user.getEmail());
+                log.debug("Замена старого имейла {} на новый {}", oldUser.getEmail(), user.getEmail());
+                oldUser.setEmail(user.getEmail());
             }
         }
 
