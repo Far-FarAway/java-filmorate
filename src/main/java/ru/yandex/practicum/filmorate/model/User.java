@@ -13,11 +13,11 @@ public class User {
     @PositiveOrZero
     int id;
     @Email
-    @NotNull(groups={OnCreate.class})
-    @NotBlank(groups={OnCreate.class})
+    @NotNull(groups = {OnCreate.class})
+    @NotBlank(groups = {OnCreate.class})
     String email;
-    @NotNull(groups={OnCreate.class})
-    @NotBlank(groups={OnCreate.class})
+    @NotNull(groups = {OnCreate.class})
+    @NotBlank(groups = {OnCreate.class})
     String login;
     String name;
     @PastOrPresent
