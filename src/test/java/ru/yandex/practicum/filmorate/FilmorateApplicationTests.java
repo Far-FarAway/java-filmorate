@@ -27,11 +27,11 @@ class FilmorateApplicationTests {
         FilmController controller = new FilmController();
 
         Throwable thrown = assertThrows(ConditionNotMetException.class, () -> controller.postFilm(film));
-        assertTrue(thrown.getMessage().contains("Имя не долнжно быть пустым"));
+        assertTrue(thrown.getMessage().contains("Имя не должно быть пустым"));
 
         film.setName("F");
         thrown = assertThrows(ConditionNotMetException.class, () -> controller.postFilm(film));
-        assertTrue(thrown.getMessage().contains("Описание не долнжно быть пустым"));
+        assertTrue(thrown.getMessage().contains("Описание не должно быть пустым"));
 
         film.setDescription("F");
         thrown = assertThrows(ConditionNotMetException.class, () -> controller.postFilm(film));

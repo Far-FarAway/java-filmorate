@@ -49,7 +49,7 @@ public class FilmController {
 
         if (film.getDescription() == null || film.getDescription().isBlank()) {
             log.warn("описание не введено");
-            throw new ConditionNotMetException("Описание не долнжно быть пустым");
+            throw new ConditionNotMetException("Описание не должно быть пустым");
         } else if (film.getDescription().length() > 200) {
             log.warn("Длинна описание превышает 200 символов: {}", film.getDescription().length());
             throw new ConditionNotMetException("Длинна описания не должна быть больше 200 символов - " +
