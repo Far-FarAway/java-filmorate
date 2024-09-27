@@ -1,5 +1,6 @@
 package ru.yandex.practicum.filmorate.controller;
 
+import jakarta.validation.Valid;
 import org.slf4j.LoggerFactory;
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.Level;
@@ -33,9 +34,15 @@ public class UserController {
     }
 
     @PostMapping
-    public User postUser(@RequestBody User user) {
+    public User postUser(@Valid @RequestBody User user) {
         log.setLevel(Level.DEBUG);
         log.info("Добавление нового пользователя");
+
+        /*
+        Я не смог понять, как можно провести валидацию данных в тестах, если эта уже валидация проходит
+        на моменте запроса, однако при обычном обращении к методу этого не происходит и как правильно запускать
+        спринг приложение в тестах, чтобы делать к нему запросы я пока не знаю
+        */
         if (user.getLogin() == null || user.getLogin().isBlank()) {
             log.warn("Логин не введен");
             throw new ConditionNotMetException("Логин не должен быть пустым");

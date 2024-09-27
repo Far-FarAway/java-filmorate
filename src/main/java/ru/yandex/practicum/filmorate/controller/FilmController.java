@@ -1,5 +1,6 @@
 package ru.yandex.practicum.filmorate.controller;
 
+import jakarta.validation.Valid;
 import org.slf4j.LoggerFactory;
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.Level;
@@ -32,9 +33,15 @@ public class FilmController {
     }
 
     @PostMapping
-    public Film postFilm(@RequestBody Film film) {
+    public Film postFilm(@Valid @RequestBody Film film) {
         log.setLevel(Level.DEBUG);
         log.info("Добавление нового фильма");
+
+        /*
+        Я не смог понять, как можно провести валидацию данных в тестах, если эта уже валидация проходит
+        на моменте запроса, однако при обычном обращении к методу этого не происходит и как правильно запускать
+        спринг приложение в тестах, чтобы делать к нему запросы я пока не знаю
+        */
         if (film.getName() == null || film.getName().isBlank()) {
             log.warn("Имя не введено");
             throw new ConditionNotMetException("Имя не долнжно быть пустым");
@@ -72,7 +79,7 @@ public class FilmController {
     }
 
     @PutMapping
-    public Film updateFilm(@RequestBody Film film) {
+    public Film updateFilm(@Valid @RequestBody Film film) {
         log.setLevel(Level.DEBUG);
         log.info("Обновление данных фильма с id {}", film.getId());
         if (film.getId() < 0 && !films.containsKey(film.getId())) {
