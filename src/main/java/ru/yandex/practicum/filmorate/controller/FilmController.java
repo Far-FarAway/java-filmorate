@@ -44,7 +44,7 @@ public class FilmController {
         */
         if (film.getName() == null || film.getName().isBlank()) {
             log.warn("Имя не введено");
-            throw new ConditionNotMetException("Имя не долнжно быть пустым");
+            throw new ConditionNotMetException("Имя не должно быть пустым");
         }
 
         if (film.getDescription() == null || film.getDescription().isBlank()) {
