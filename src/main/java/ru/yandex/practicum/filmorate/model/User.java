@@ -7,20 +7,19 @@ import lombok.Data;
 
 import java.time.LocalDate;
 
+
 @Data
-public class Film {
+public class User {
     @PositiveOrZero
     int id;
+    @Email
     @NotNull(groups = {OnCreate.class})
     @NotBlank(groups = {OnCreate.class})
+    String email;
+    @NotNull(groups = {OnCreate.class})
+    @NotBlank(groups = {OnCreate.class})
+    String login;
     String name;
-    @NotNull(groups = {OnCreate.class})
-    @NotBlank(groups = {OnCreate.class})
-    @Size(max = 200)
-    String description;
-    @NotNull(groups = {OnCreate.class})
     @PastOrPresent
-    LocalDate releaseDate;
-    @PositiveOrZero
-    int duration;
+    LocalDate birthday;
 }
