@@ -1,6 +1,5 @@
 package ru.yandex.practicum.filmorate.storage.user;
 
-import ch.qos.logback.classic.Level;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.controller.ControllerUtility;
@@ -137,16 +136,20 @@ public class InMemoryUserStorage implements UserStorage{
 
     @Override
     public User deleteUser(int userId) {
-        if (users.containsKey(userId)) {
-            User deletedUser = users.get(userId);
-            log.debug("Удаление пользователя: {}", deletedUser);
-            users.remove(userId);
+        User deletedUser = findById(userId);
+        log.debug("Удаление пользователя: {}", deletedUser);
+        users.remove(userId);
 
-            log.info("Удаление пользователья с id {}", userId);
-            return deletedUser;
+        log.info("Удаление пользователья с id {}", userId);
+        return deletedUser;
+    }
+
+    public User findById(int id) {
+        if (users.containsKey(id)) {
+            return users.get(id);
         } else {
-            log.warn("Пользователь с id {} не найден", userId);
-            throw new ConditionNotMetException("Пользователь с id " + userId + "не найден");
+            log.warn("Фильм с id {} не найден", id);
+            throw new ConditionNotMetException("Фильм с id " + id + " не найден");
         }
     }
 }
