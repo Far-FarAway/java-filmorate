@@ -22,6 +22,16 @@ public class UserController {
         return userStorage.getUsers();
     }
 
+    @GetMapping("/{userId}/friends")
+    public Collection<Integer> getFriends(@PathVariable int userId) {
+        return userService.getFriends(userId, userStorage);
+    }
+
+    @GetMapping("/{userId}/friends/{friendId}")
+    public Collection<Integer> getCommonFriends(@PathVariable int userId, @PathVariable int friendId) {
+        return userService.getCommonFriends(userId,friendId, userStorage);
+    }
+
     @PostMapping
     public User postUser(@Valid @RequestBody User user) {
         return userStorage.postUser(user);
@@ -40,5 +50,10 @@ public class UserController {
     @DeleteMapping("/{userId}")
     public User deleteUser(@PathVariable int userId) {
         return userStorage.deleteUser(userId);
+    }
+
+    @DeleteMapping("/{userId}/friends/{friendId}")
+    public Collection<Integer> deleteUser(@PathVariable int userId, @PathVariable int friendId) {
+        return userService.deleteUser(userId, friendId, userStorage);
     }
 }
