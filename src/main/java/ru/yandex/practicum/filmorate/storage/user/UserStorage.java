@@ -9,4 +9,5 @@ public interface UserStorage {
     User postUser(User user);
     User updateUser(User user);
     User deleteUser(int userId);
+    User findById(int userId);
 }

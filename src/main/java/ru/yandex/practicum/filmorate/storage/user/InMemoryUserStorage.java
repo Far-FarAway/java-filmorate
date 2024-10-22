@@ -144,6 +144,7 @@ public class InMemoryUserStorage implements UserStorage{
         return deletedUser;
     }
 
+    @Override
     public User findById(int id) {
         if (users.containsKey(id)) {
             return users.get(id);
