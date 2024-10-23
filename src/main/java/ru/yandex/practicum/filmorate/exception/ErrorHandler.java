@@ -1,6 +1,7 @@
 package ru.yandex.practicum.filmorate.exception;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -12,8 +13,9 @@ public class ErrorHandler {
         return new ErrorResponse("Данные не найдены: " + ex.getMessage());
     }
 
-    @ExceptionHandler
-    public ErrorResponse handleValidException(final ConditionNotMetException ex) {
+    @ExceptionHandler({MethodArgumentNotValidException.class, ConditionNotMetException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleValidException(final Throwable ex) {
         return new ErrorResponse("Валидация данных не прошла: " + ex.getMessage());
     }
 
