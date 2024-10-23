@@ -9,17 +9,24 @@ import java.util.Collection;
 
 import ru.yandex.practicum.filmorate.annotation.OnCreate;
 import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.storage.film.InMemoryFilmStorage;
+import ru.yandex.practicum.filmorate.service.film.FilmService;
+import ru.yandex.practicum.filmorate.storage.film.FilmStorage;
 
 @RestController
 @RequestMapping("/films")
 @AllArgsConstructor
 public class FilmController {
-    InMemoryFilmStorage filmStorage;
+    FilmStorage filmStorage;
+    FilmService filmService;
 
     @GetMapping
     public Collection<Film> getFilms() {
         return filmStorage.getFilms();
+    }
+
+    @GetMapping("/popular")
+    public Collection<Film> getPopularFilms(@RequestParam(defaultValue = "10") int count) {
+        return filmService.getPopularFilms(count, filmStorage);
     }
 
     @PostMapping
@@ -28,13 +35,23 @@ public class FilmController {
         return filmStorage.postFilm(film);
     }
 
+    @PutMapping("/{filmId}/users/{userId}")
+    public Collection<Integer> addLike(@PathVariable int filmId, @PathVariable int userId) {
+        return filmService.addLike(filmId, userId, filmStorage);
+    }
+
     @PutMapping
     public Film updateFilm(@Valid @RequestBody Film film) {
         return filmStorage.updateFilm(film);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{filmId}")
     public Film deleteFilm(@PathVariable int filmId) {
         return filmStorage.deleteFilm(filmId);
+    }
+
+    @DeleteMapping("/{filmId}/users/{userId}")
+    public Collection<Integer> deleteLike(int filmId, int userId) {
+        return filmService.deleteLike(filmId, userId, filmStorage);
     }
 }
