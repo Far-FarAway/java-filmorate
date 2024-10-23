@@ -3,6 +3,7 @@ package ru.yandex.practicum.filmorate.service.film;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exception.ConditionNotMetException;
+import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.storage.film.FilmStorage;
 import ru.yandex.practicum.filmorate.storage.user.UserStorage;
@@ -38,7 +39,7 @@ public class FilmService {
             return filmLikes;
         } else {
             log.warn("пользователь(id: {}) не найден в списке лайкнувших фильм(id: {})", userId, filmId);
-            throw new ConditionNotMetException("пользователь(id: " + userId +
+            throw new NotFoundException("пользователь(id: " + userId +
                     ") не найден в списке лайкнувших фильм(id: " + filmId + ")");
         }
     }
