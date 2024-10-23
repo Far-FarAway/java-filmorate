@@ -19,22 +19,10 @@ public class UserService {
         User newFriend = storage.findById(friendId);
 
         log.debug("Добавление нового друга(id: {}) в список друзей пользовтеля(id {})", friendId, userId);
-        if (user.getFriends() == null) {
-            Set<Integer> friendList = new TreeSet<>();
-            friendList.add(newFriend.getId());
-            user.setFriends(friendList);
-        } else {
-            user.getFriends().add(newFriend.getId());
-        }
+        user.getFriends().add(newFriend.getId());
 
         log.debug("Добавление пользователя(id: {}) в список друзей нового друга(id {})", userId, friendId);
-        if (newFriend.getFriends() == null) {
-            Set<Integer> friendList = new TreeSet<>();
-            friendList.add(user.getId());
-            newFriend.setFriends(friendList);
-        } else {
-            newFriend.getFriends().add(user.getId());
-        }
+        newFriend.getFriends().add(user.getId());
 
         log.info("Списки друзей обновлены. Социализация прошла успешно");
         return newFriend;
