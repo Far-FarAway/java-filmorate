@@ -7,6 +7,7 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.Set;
+import java.util.TreeSet;
 
 @Data
 public class Film {
@@ -24,5 +25,5 @@ public class Film {
     LocalDate releaseDate;
     @PositiveOrZero
     int duration;
-    Set<Integer> likes;
+    Set<Integer> likes = new TreeSet<>();
 }
