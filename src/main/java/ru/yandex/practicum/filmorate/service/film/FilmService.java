@@ -32,7 +32,7 @@ public class FilmService {
     public Collection<Integer> deleteLike(int filmId, int userId, FilmStorage storage) {
         log.info("Удаление лайка пользователя(id: {}) у фильма(id: {}) ", userId, filmId);
         Set<Integer> filmLikes = storage.findById(filmId).getLikes();
-        if(filmLikes.contains(userId)) {
+        if (filmLikes.contains(userId)) {
             filmLikes.remove(userId);
             return filmLikes;
         } else {

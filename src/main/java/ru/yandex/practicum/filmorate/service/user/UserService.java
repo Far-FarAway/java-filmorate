@@ -2,13 +2,11 @@ package ru.yandex.practicum.filmorate.service.user;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.yandex.practicum.filmorate.exception.ConditionNotMetException;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.user.UserStorage;
 
 import java.util.Collection;
 import java.util.Set;
-import java.util.TreeSet;
 
 @Service
 @Slf4j
@@ -45,13 +43,12 @@ public class UserService {
         log.info("Удаление из списка друзей пользователя(id: {}) друга с id {}", userId, friendId);
         Set<Integer> userFriendList = storage.findById(userId).getFriends();
         Set<Integer> friendFriendList = storage.findById(friendId).getFriends();
-            log.info("Пользователь(id: {}) успешно удален из списка друзей", friendId);
-            userFriendList.remove(friendId);
-            friendFriendList.remove(userId);
-            return userFriendList;
+        log.info("Пользователь(id: {}) успешно удален из списка друзей", friendId);
+        userFriendList.remove(friendId);
+        friendFriendList.remove(userId);
+        return userFriendList;
 
     }
-
 
 
 }
