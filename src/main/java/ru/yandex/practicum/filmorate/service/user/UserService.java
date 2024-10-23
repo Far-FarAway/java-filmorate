@@ -44,9 +44,11 @@ public class UserService {
     public Collection<Integer> deleteUser(int userId, int friendId, UserStorage storage) {
         log.info("Удаление из списка друзей пользователя(id: {}) друга с id {}", userId, friendId);
         Set<Integer> userFriendList = storage.findById(userId).getFriends();
+        Set<Integer> friendFriendList = storage.findById(friendId).getFriends();
         if(userFriendList.contains(friendId)) {
             log.info("Пользователь(id: {}) успешно удален из списка друзей", friendId);
             userFriendList.remove(friendId);
+            friendFriendList.remove(userId);
             return userFriendList;
         } else {
             log.warn("Пользователь с id {} не найден в списке друзей пользователя(id {})", friendId, userId);
