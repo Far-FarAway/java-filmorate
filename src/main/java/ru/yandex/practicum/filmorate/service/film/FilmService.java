@@ -2,7 +2,6 @@ package ru.yandex.practicum.filmorate.service.film;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.yandex.practicum.filmorate.exception.ConditionNotMetException;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.storage.film.FilmStorage;
@@ -11,7 +10,6 @@ import ru.yandex.practicum.filmorate.storage.user.UserStorage;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Set;
-import java.util.TreeSet;
 
 @Service
 @Slf4j
@@ -19,7 +17,7 @@ public class FilmService {
     Comparator<Film> comparator = new Comparator<Film>() {
         @Override
         public int compare(Film o1, Film o2) {
-            return o1.getLikes().size() - o2.getLikes().size();
+            return -1 * (o1.getLikes().size() - o2.getLikes().size());
         }
     };
 
