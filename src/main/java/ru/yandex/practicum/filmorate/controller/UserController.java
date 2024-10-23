@@ -37,7 +37,7 @@ public class UserController {
         return userStorage.postUser(user);
     }
 
-    @PostMapping("/{userId}/friends/{friendId}")
+    @PutMapping("/{userId}/friends/{friendId}")
     public User addFriend(@PathVariable int userId, @PathVariable int friendId) {
         return userService.addFriend(userId, friendId, userStorage);
     }
