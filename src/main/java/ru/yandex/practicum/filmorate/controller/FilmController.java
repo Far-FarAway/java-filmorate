@@ -53,7 +53,7 @@ public class FilmController {
     }
 
     @DeleteMapping("/{filmId}/like/{userId}")
-    public Collection<Integer> deleteLike(int filmId, int userId) {
+    public Collection<Integer> deleteLike(@PathVariable int filmId, @PathVariable int userId) {
         return filmService.deleteLike(filmId, userId, filmStorage);
     }
 }
