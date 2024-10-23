@@ -35,7 +35,7 @@ public class FilmController {
         return filmStorage.postFilm(film);
     }
 
-    @PutMapping("/{filmId}/users/{userId}")
+    @PutMapping("/{filmId}/like/{userId}")
     public Collection<Integer> addLike(@PathVariable int filmId, @PathVariable int userId) {
         return filmService.addLike(filmId, userId, filmStorage);
     }
@@ -50,7 +50,7 @@ public class FilmController {
         return filmStorage.deleteFilm(filmId);
     }
 
-    @DeleteMapping("/{filmId}/users/{userId}")
+    @DeleteMapping("/{filmId}/like/{userId}")
     public Collection<Integer> deleteLike(int filmId, int userId) {
         return filmService.deleteLike(filmId, userId, filmStorage);
     }
