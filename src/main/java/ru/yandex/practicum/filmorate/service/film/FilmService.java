@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exception.ConditionNotMetException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.storage.film.FilmStorage;
+import ru.yandex.practicum.filmorate.storage.user.UserStorage;
 
 import java.util.Collection;
 import java.util.Comparator;
@@ -21,17 +22,12 @@ public class FilmService {
         }
     };
 
-    public Collection<Integer> addLike(int filmId, int userId, FilmStorage storage) {
+    public Collection<Integer> addLike(int filmId, int userId, UserStorage userStorage, FilmStorage storage) {
         log.info("Добавление лайка фильму(id: {}) от пользователя(id: {})", filmId, userId);
         Set<Integer> filmLikes = storage.findById(filmId).getLikes();
-        if(filmLikes == null) {
-            filmLikes = new TreeSet<>();
-            filmLikes.add(userId);
-            return filmLikes;
-        } else {
-            filmLikes.add(userId);
-            return filmLikes;
-        }
+        userStorage.findById(userId);
+        filmLikes.add(userId);
+        return filmLikes;
     }
 
     public Collection<Integer> deleteLike(int filmId, int userId, FilmStorage storage) {
