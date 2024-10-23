@@ -41,20 +41,15 @@ public class UserService {
         return user.getFriends().stream().filter(friendFriendList::contains).toList();
     }
 
-    public Collection<Integer> deleteUser(int userId, int friendId, UserStorage storage) {
+    public Collection<Integer> deleteFriend(int userId, int friendId, UserStorage storage) {
         log.info("Удаление из списка друзей пользователя(id: {}) друга с id {}", userId, friendId);
         Set<Integer> userFriendList = storage.findById(userId).getFriends();
         Set<Integer> friendFriendList = storage.findById(friendId).getFriends();
-        if(userFriendList.contains(friendId)) {
             log.info("Пользователь(id: {}) успешно удален из списка друзей", friendId);
             userFriendList.remove(friendId);
             friendFriendList.remove(userId);
             return userFriendList;
-        } else {
-            log.warn("Пользователь с id {} не найден в списке друзей пользователя(id {})", friendId, userId);
-            throw new ConditionNotMetException("Пользователь с id " + friendId +
-                    " не найден в списке друзей пользователя(id " + userId + ")");
-        }
+
     }
 
 
