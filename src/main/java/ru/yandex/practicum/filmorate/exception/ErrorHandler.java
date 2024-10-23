@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice(basePackages = "ru.yandex.practicum.filmorate")
 public class ErrorHandler {
     @ExceptionHandler
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse handleNotFoundException(final NotFoundException ex) {
         return new ErrorResponse("Данные не найдены: " + ex.getMessage());
     }
