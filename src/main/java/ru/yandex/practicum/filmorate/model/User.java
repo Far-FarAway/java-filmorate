@@ -7,6 +7,7 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.Set;
+import java.util.TreeSet;
 
 
 @Data
@@ -23,5 +24,5 @@ public class User {
     String name;
     @PastOrPresent
     LocalDate birthday;
-    Set<Integer> friends;
+    Set<Integer> friends = new TreeSet<>();
 }
