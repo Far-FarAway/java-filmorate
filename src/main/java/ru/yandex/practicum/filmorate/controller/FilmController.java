@@ -11,11 +11,13 @@ import ru.yandex.practicum.filmorate.annotation.OnCreate;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.service.film.FilmService;
 import ru.yandex.practicum.filmorate.storage.film.FilmStorage;
+import ru.yandex.practicum.filmorate.storage.user.UserStorage;
 
 @RestController
 @RequestMapping("/films")
 @AllArgsConstructor
 public class FilmController {
+    UserStorage userStorage;
     FilmStorage filmStorage;
     FilmService filmService;
 
@@ -37,7 +39,7 @@ public class FilmController {
 
     @PutMapping("/{filmId}/like/{userId}")
     public Collection<Integer> addLike(@PathVariable int filmId, @PathVariable int userId) {
-        return filmService.addLike(filmId, userId, filmStorage);
+        return filmService.addLike(filmId, userId, userStorage, filmStorage);
     }
 
     @PutMapping
