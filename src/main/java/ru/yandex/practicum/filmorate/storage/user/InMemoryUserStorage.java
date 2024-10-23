@@ -150,7 +150,7 @@ public class InMemoryUserStorage implements UserStorage{
             return users.get(id);
         } else {
             log.warn("Фильм с id {} не найден", id);
-            throw new ConditionNotMetException("Фильм с id " + id + " не найден");
+            throw new NotFoundException("Фильм с id " + id + " не найден");
         }
     }
 }
