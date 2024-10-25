@@ -35,20 +35,20 @@ public class UserService {
         log.info("Получение списка общих друзей пользователя(id: {}) с другом(id: {})", userId, friendId);
         User user = storage.findById(userId);
         User friend = storage.findById(friendId);
-        Set<Integer> friendFriendList = friend.getFriends();
+        Set<Integer> friendList = friend.getFriends();
         return user.getFriends().stream()
-                .filter(friendFriendList::contains)
+                .filter(friendList::contains)
                 .toList();
     }
 
     public Collection<Integer> deleteFriend(int userId, int friendId, UserStorage storage) {
         log.info("Удаление из списка друзей пользователя(id: {}) друга с id {}", userId, friendId);
-        Set<Integer> userFriendList = storage.findById(userId).getFriends();
-        Set<Integer> friendFriendList = storage.findById(friendId).getFriends();
+        Set<Integer> user1FriendList = storage.findById(userId).getFriends();
+        Set<Integer> user2FriendList = storage.findById(friendId).getFriends();
         log.info("Пользователь(id: {}) успешно удален из списка друзей", friendId);
-        userFriendList.remove(friendId);
-        friendFriendList.remove(userId);
-        return userFriendList;
+        user1FriendList.remove(friendId);
+        user2FriendList.remove(userId);
+        return user1FriendList;
 
     }
 
