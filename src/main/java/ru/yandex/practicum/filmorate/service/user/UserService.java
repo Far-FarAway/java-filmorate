@@ -36,7 +36,9 @@ public class UserService {
         User user = storage.findById(userId);
         User friend = storage.findById(friendId);
         Set<Integer> friendFriendList = friend.getFriends();
-        return user.getFriends().stream().filter(friendFriendList::contains).toList();
+        return user.getFriends().stream()
+                .filter(friendFriendList::contains)
+                .toList();
     }
 
     public Collection<Integer> deleteFriend(int userId, int friendId, UserStorage storage) {

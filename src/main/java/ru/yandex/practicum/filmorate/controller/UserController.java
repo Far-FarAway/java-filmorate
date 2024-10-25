@@ -24,12 +24,16 @@ public class UserController {
 
     @GetMapping("/{userId}/friends")
     public Collection<User> getFriends(@PathVariable int userId) {
-        return userService.getFriends(userId, userStorage).stream().map(userStorage::findById).toList();
+        return userService.getFriends(userId, userStorage).stream()
+                .map(userStorage::findById)
+                .toList();
     }
 
     @GetMapping("/{userId}/friends/common/{otherId}")
     public Collection<User> getCommonFriends(@PathVariable int userId, @PathVariable int otherId) {
-        return userService.getCommonFriends(userId, otherId, userStorage).stream().map(userStorage::findById).toList();
+        return userService.getCommonFriends(userId, otherId, userStorage).stream()
+                .map(userStorage::findById)
+                .toList();
     }
 
     @PostMapping

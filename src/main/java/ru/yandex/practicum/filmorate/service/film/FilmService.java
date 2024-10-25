@@ -43,6 +43,9 @@ public class FilmService {
     }
 
     public Collection<Film> getPopularFilms(int count, FilmStorage storage) {
-        return storage.getFilms().stream().limit(count).sorted(comparator).toList();
+        return storage.getFilms().stream()
+                .limit(count)
+                .sorted(comparator)
+                .toList();
     }
 }
