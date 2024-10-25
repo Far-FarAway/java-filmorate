@@ -14,8 +14,8 @@ import java.util.Collection;
 @RequestMapping("/users")
 @AllArgsConstructor
 public class UserController {
-    UserStorage userStorage;
-    UserService userService;
+    private UserStorage userStorage;
+    private UserService userService;
 
     @GetMapping
     public Collection<User> getUsers() {

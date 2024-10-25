@@ -14,7 +14,7 @@ import java.util.Set;
 @Service
 @Slf4j
 public class FilmService {
-    Comparator<Film> comparator = new Comparator<Film>() {
+    private final Comparator<Film> comparator = new Comparator<Film>() {
         @Override
         public int compare(Film o1, Film o2) {
             return -1 * (o1.getLikes().size() - o2.getLikes().size());

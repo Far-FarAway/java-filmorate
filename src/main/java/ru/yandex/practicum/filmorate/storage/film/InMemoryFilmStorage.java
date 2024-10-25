@@ -15,7 +15,7 @@ import java.util.Map;
 @Slf4j
 @Component
 public class InMemoryFilmStorage implements FilmStorage {
-    Map<Integer, Film> films = new HashMap<>();
+    private final Map<Integer, Film> films = new HashMap<>();
     private static final LocalDate CINEMA_BIRTH = LocalDate.of(1895, 12, 28);
 
     @Override

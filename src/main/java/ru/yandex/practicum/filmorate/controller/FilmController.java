@@ -17,9 +17,9 @@ import ru.yandex.practicum.filmorate.storage.user.UserStorage;
 @RequestMapping("/films")
 @AllArgsConstructor
 public class FilmController {
-    UserStorage userStorage;
-    FilmStorage filmStorage;
-    FilmService filmService;
+    private UserStorage userStorage;
+    private FilmStorage filmStorage;
+    private FilmService filmService;
 
     @GetMapping
     public Collection<Film> getFilms() {
