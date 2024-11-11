@@ -26,4 +26,8 @@ public class Film {
     @PositiveOrZero
     int duration;
     Set<Integer> likes = new TreeSet<>();
+    String genre;
+    @NotNull(groups = {OnCreate.class})
+    @NotBlank(groups = {OnCreate.class})
+    String rating;
 }
