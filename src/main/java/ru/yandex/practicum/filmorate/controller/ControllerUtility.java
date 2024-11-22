@@ -16,7 +16,8 @@ public class ControllerUtility {
                     } else {
                         return person.getLogin().equals(value);
                     }
-                }).findAny();
+                })
+                .findAny();
 
         return duplicate.isPresent();
     }
