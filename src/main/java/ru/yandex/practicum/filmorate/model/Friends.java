@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class Friends {
     @PositiveOrZero
-    long user_id;
+    int user_id;
     @PositiveOrZero
-    long friends_id;
+    int friends_id;
 }
