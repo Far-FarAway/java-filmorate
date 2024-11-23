@@ -20,7 +20,7 @@ public class Film {
     String description;
     @NotNull(groups = {OnCreate.class})
     @PastOrPresent
-    LocalDate releaseDate;
+    Instant releaseDate;
     @PositiveOrZero
     int duration;
     Set<Integer> likes = new TreeSet<>();
