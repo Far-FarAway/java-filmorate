@@ -24,6 +24,5 @@ public class User {
     String name;
     @PastOrPresent
     LocalDate birthday;
-    Set<Integer> friends = new TreeSet<>();
     FriendStatus friendStatus;
 }
