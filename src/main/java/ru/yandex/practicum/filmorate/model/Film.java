@@ -12,20 +12,19 @@ import java.util.List;
 @Data
 public class Film {
     @PositiveOrZero
-    int id;
+    private int id;
     @NotNull(groups = {OnCreate.class})
     @NotBlank(groups = {OnCreate.class})
-    String name;
+    private String name;
     @Size(max = 200)
-    String description;
+    private String description;
     @NotNull(groups = {OnCreate.class})
     @PastOrPresent
-    Instant releaseDate;
+    private Instant releaseDate;
     @PositiveOrZero
     int duration;
-    List<User> likes = new ArrayList<>();
-    String genre;
+    private String genre;
     @NotNull(groups = {OnCreate.class})
     @NotBlank(groups = {OnCreate.class})
-    String rating;
+    private String rating;
 }
