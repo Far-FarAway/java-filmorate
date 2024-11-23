@@ -19,7 +19,11 @@ CREATE TABLE IF NOT EXISTS films (
   description VARCHAR,
   release_date TIMESTAMP WITH TIME ZONE NOT NULL,
   duration INTEGER NOT NULL,
-  likes INTEGER REFERENCES users(user_id),
   genre VARCHAR,
   rating VARCHAR NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS films_likes (
+  film_id INTEGER REFERENCES films(film_id),
+  user_id INTEGER REFERENCES users(user_id)
 );
