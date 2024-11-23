@@ -14,5 +14,5 @@ public interface FilmStorage {
 
     boolean deleteFilm(int filmId);
 
-    Optional<Film> findById(int filmId);
+    Film findById(int filmId);
 }
