@@ -6,9 +6,8 @@ import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.time.Instant;
-import java.time.LocalDate;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 public class Film {
@@ -24,7 +23,7 @@ public class Film {
     Instant releaseDate;
     @PositiveOrZero
     int duration;
-    Set<Integer> likes = new TreeSet<>();
+    List<User> likes = new ArrayList<>();
     String genre;
     @NotNull(groups = {OnCreate.class})
     @NotBlank(groups = {OnCreate.class})
