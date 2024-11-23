@@ -8,11 +8,11 @@ import java.util.Optional;
 public interface FilmStorage {
     Collection<Film> getFilms();
 
-    Optional<Film> postFilm(Film film);
+    int postFilm(Film film);
 
-    Optional<Film> updateFilm(Film film);
+    boolean updateFilm(Film film);
 
-    Optional<Film> deleteFilm(int filmId);
+    boolean deleteFilm(int filmId);
 
     Optional<Film> findById(int filmId);
 }
