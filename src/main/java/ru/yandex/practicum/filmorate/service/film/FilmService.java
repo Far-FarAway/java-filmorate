@@ -2,47 +2,38 @@ package ru.yandex.practicum.filmorate.service.film;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.model.FilmsLikesModel;
 import ru.yandex.practicum.filmorate.storage.film.FilmStorage;
-import ru.yandex.practicum.filmorate.storage.user.UserStorage;
+import ru.yandex.practicum.filmorate.storage.filmslikes.FilmsLikes;
 
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Slf4j
 public class FilmService {
-    Comparator<Film> comparator = new Comparator<Film>() {
-        @Override
-        public int compare(Film o1, Film o2) {
-            return -1 * (o1.getLikes().size() - o2.getLikes().size());
-        }
-    };
-
-    public Collection<Integer> addLike(int filmId, int userId, UserStorage userStorage, FilmStorage storage) {
+    public boolean addLike(int filmId, int userId, FilmsLikes likesStorage) {
         log.info("Добавление лайка фильму(id: {}) от пользователя(id: {})", filmId, userId);
-        Set<Integer> filmLikes = storage.findById(filmId).getLikes();
-        userStorage.findById(userId);
-        filmLikes.add(userId);
-        return filmLikes;
+        return likesStorage.addLike(filmId, userId);
     }
 
-    public Collection<Integer> deleteLike(int filmId, int userId, FilmStorage storage) {
+    public boolean deleteLike(int filmId, int userId, FilmsLikes likeStorage) {
         log.info("Удаление лайка пользователя(id: {}) у фильма(id: {}) ", userId, filmId);
-        Set<Integer> filmLikes = storage.findById(filmId).getLikes();
-        if (filmLikes.contains(userId)) {
-            filmLikes.remove(userId);
-            return filmLikes;
-        } else {
-            log.warn("пользователь(id: {}) не найден в списке лайкнувших фильм(id: {})", userId, filmId);
-            throw new NotFoundException("пользователь(id: " + userId +
-                    ") не найден в списке лайкнувших фильм(id: " + filmId + ")");
-        }
+        return likeStorage.deleteLike(filmId, userId);
     }
 
-    public Collection<Film> getPopularFilms(int count, FilmStorage storage) {
-        return storage.getFilms().stream().limit(count).sorted(comparator).toList();
+    public Collection<Film> getPopularFilms(int count, FilmStorage storage, FilmsLikes likesStorage) {
+        Comparator<Film> comparator = new Comparator<Film>() {
+            @Override
+            public int compare(Film o1, Film o2) {
+                return -1 * (likesStorage.getLikesByFilm(o1.getId()).size() -
+                        likesStorage.getLikesByFilm(o2.getId()).size());
+            }
+        };
+
+        Set<Film> list = new TreeSet<>(comparator);
+        list.addAll(storage.getFilms());
+
+        return list;
     }
 }
