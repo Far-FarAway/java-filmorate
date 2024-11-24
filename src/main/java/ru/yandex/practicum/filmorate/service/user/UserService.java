@@ -23,7 +23,7 @@ public class UserService {
         List<String> list = new ArrayList<>();
 
         for(FriendList friend : friendListStorage.getFriends(userId)) {
-            list.add(friend.getFriends().getLogin());
+            list.add(friend.getFriend().getLogin());
             friendList.put(friend.getUser().getLogin(), list);
         }
 

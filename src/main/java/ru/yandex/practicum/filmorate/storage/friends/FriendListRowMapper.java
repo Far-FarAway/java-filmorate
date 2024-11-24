@@ -20,7 +20,7 @@ public class FriendListRowMapper implements RowMapper<FriendList> {
     public FriendList mapRow(ResultSet results, int rowNum) throws SQLException {
         FriendList friendList = new FriendList();
         friendList.setUser(storage.findById(results.getInt("user_id")));
-        friendList.setFriends(storage.findById(results.getInt("friend_id")));
+        friendList.setFriend(storage.findById(results.getInt("friend_id")));
 
         return friendList;
     }
