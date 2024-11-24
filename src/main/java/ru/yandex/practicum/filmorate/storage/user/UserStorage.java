@@ -7,11 +7,11 @@ import java.util.Collection;
 public interface UserStorage {
     Collection<User> getUsers();
 
-    User postUser(User user);
+    boolean postUser(User user);
 
-    User updateUser(User user);
+    boolean updateUser(User user);
 
-    User deleteUser(int userId);
+    boolean deleteUser(int userId);
 
     User findById(int userId);
 }
