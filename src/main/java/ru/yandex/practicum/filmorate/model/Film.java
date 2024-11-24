@@ -1,6 +1,8 @@
 package ru.yandex.practicum.filmorate.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import ru.yandex.practicum.filmorate.LocalDateToInstantDeserializer;
 import ru.yandex.practicum.filmorate.annotation.OnCreate;
 
 import jakarta.validation.constraints.*;
@@ -21,6 +23,7 @@ public class Film {
     @Size(max = 200)
     private String description;
     @NotNull(groups = {OnCreate.class})
+    @JsonDeserialize(using = LocalDateToInstantDeserializer.class)
     private Instant releaseDate;
     @PositiveOrZero
     int duration;
