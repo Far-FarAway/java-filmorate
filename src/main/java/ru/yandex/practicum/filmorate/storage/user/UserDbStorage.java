@@ -19,7 +19,8 @@ import java.util.List;
 public class UserDbStorage extends BaseRepository<User> implements UserStorage{
     private final static String FIND_USER_QUERY = "SELECT * FROM users WHERE user_id = ?";
     private final static String FIND_USERS_QUERY = "SELECT * FROM users";
-    private final static String DELETE_USER_QUERY = "DELETE FROM users WHERE user_id = ? CASCADE";
+    private final static String DELETE_USER_QUERY = "DELETE FROM users WHERE user_id = ?";
+    private final static String DELETE_USERS_FRIENDLIST_QUERY = "DELETE FROM friends WHERE user_id = ?";
     private final static String UPDATE_USER_QUERY = "UPDATE users SET name = ?, login = ?," +
             " email = ?, birthday = ?, friend_status = ? " +
             "WHERE user_id = ?";
@@ -56,6 +57,7 @@ public class UserDbStorage extends BaseRepository<User> implements UserStorage{
     }
 
     public boolean deleteUser(int userId) {
+        delete(DELETE_USERS_FRIENDLIST_QUERY, userId);
         return delete(DELETE_USER_QUERY, userId);
     }
 
