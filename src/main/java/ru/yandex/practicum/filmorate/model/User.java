@@ -5,7 +5,7 @@ import ru.yandex.practicum.filmorate.annotation.OnCreate;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
-import java.time.LocalDate;
+import java.time.Instant;
 
 
 @Data
@@ -21,6 +21,6 @@ public class User {
     private String login;
     private String name;
     @PastOrPresent
-    private LocalDate birthday;
+    private Instant birthday;
     private FriendStatus friendStatus;
 }
