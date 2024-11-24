@@ -20,7 +20,7 @@ public class ErrorHandler {
         return new ErrorResponse("Валидация данных не прошла: " + ex.getMessage());
     }
 
-    @ExceptionHandler
+    @ExceptionHandler({Throwable.class, InternalServerException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleUnexpectedException(final Throwable ex) {
         return new ErrorResponse("Произошла непредвиденная ошибка: " + ex.getMessage());
