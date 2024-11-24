@@ -42,7 +42,7 @@ public class UserDbStorage extends BaseRepository<User> implements UserStorage{
                 user.getLogin(),
                 user.getEmail(),
                 Timestamp.from(user.getBirthday()),
-                user.getFriendStatus().toString());
+                user.getFriendStatus() == null ? null : user.getFriendStatus().toString());
     }
 
     public boolean updateUser(User user) {
@@ -52,7 +52,7 @@ public class UserDbStorage extends BaseRepository<User> implements UserStorage{
                 user.getLogin().isBlank() ? oldUser.getLogin() : user.getLogin(),
                 user.getEmail().isBlank() ? oldUser.getEmail() : user.getEmail(),
                 user.getBirthday(),
-                user.getFriendStatus().toString(),
+                user.getFriendStatus() == null ? null : user.getFriendStatus().toString(),
                 user.getId());
     }
 
