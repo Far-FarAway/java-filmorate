@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import ru.yandex.practicum.filmorate.model.FilmsLikesModel;
+import ru.yandex.practicum.filmorate.model.FilmsLikes;
 import ru.yandex.practicum.filmorate.storage.BaseRepository;
 
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class FilmsLikesDbStorage extends BaseRepository<FilmsLikesModel> implements FilmsLikes {
+public class FilmsLikesDbStorage extends BaseRepository<FilmsLikes> implements FilmsLikesStorage {
     private final static String ADD_LIKE_QUERY = "INSERT INTO films_likes(film_id, user_id) " +
             "VALUES (?, ?) returning film_id";
     private final static String GET_LIKES_QUERY = "SELECT * FROM films_likes";
@@ -22,7 +22,7 @@ public class FilmsLikesDbStorage extends BaseRepository<FilmsLikesModel> impleme
     private final static String DELETE_LIKE_QUERY = "DELETE FROM films_likes WHERE film_id = ? and user_id = ?";
 
     @Autowired
-    public FilmsLikesDbStorage(JdbcTemplate jdbc, @Qualifier("filmsLikesRowMapper") RowMapper<FilmsLikesModel> mapper) {
+    public FilmsLikesDbStorage(JdbcTemplate jdbc, @Qualifier("filmsLikesRowMapper") RowMapper<FilmsLikes> mapper) {
         super (jdbc, mapper);
     }
 
@@ -35,7 +35,7 @@ public class FilmsLikesDbStorage extends BaseRepository<FilmsLikesModel> impleme
         List<String> likesList = null;
         String filmName = "";
 
-        for(FilmsLikesModel like : findMany(GET_LIKES_QUERY)) {
+        for(FilmsLikes like : findMany(GET_LIKES_QUERY)) {
             if (!filmName.equals(like.getFilm().getName())) {
                 likesList = new ArrayList<>();
                 filmName = like.getFilm().getName();
@@ -52,7 +52,7 @@ public class FilmsLikesDbStorage extends BaseRepository<FilmsLikesModel> impleme
         Map<String, List<String>> filmsLikes = new HashMap<>();
         List<String> likesList = new ArrayList<>();
 
-        for(FilmsLikesModel like : findMany(GET_LIKES_BY_FILM_QUERY, filmId)) {
+        for(FilmsLikes like : findMany(GET_LIKES_BY_FILM_QUERY, filmId)) {
             likesList.add(like.getUser().getName());
             filmsLikes.put(like.getFilm().getName(), likesList);
         }

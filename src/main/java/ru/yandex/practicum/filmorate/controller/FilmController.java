@@ -13,14 +13,14 @@ import ru.yandex.practicum.filmorate.annotation.OnCreate;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.service.film.FilmService;
 import ru.yandex.practicum.filmorate.storage.film.FilmStorage;
-import ru.yandex.practicum.filmorate.storage.filmslikes.FilmsLikes;
+import ru.yandex.practicum.filmorate.storage.filmslikes.FilmsLikesStorage;
 
 @RestController
 @RequestMapping("/films")
 @AllArgsConstructor
 public class FilmController {
     FilmStorage filmStorage;
-    FilmsLikes likesStorage;
+    FilmsLikesStorage likesStorage;
     FilmService filmService;
 
     @GetMapping
