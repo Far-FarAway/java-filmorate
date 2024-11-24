@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface FilmStorage {
     Collection<Film> getFilms();
 
-    int postFilm(Film film);
+    boolean postFilm(Film film);
 
     boolean updateFilm(Film film);
 
