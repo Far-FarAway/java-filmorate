@@ -6,5 +6,5 @@ import lombok.Data;
 @Data
 public class FriendList {
     private User user;
-    private User friends;
+    private User friend;
 }
