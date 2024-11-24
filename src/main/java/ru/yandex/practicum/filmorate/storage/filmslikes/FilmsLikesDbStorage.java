@@ -8,10 +8,7 @@ import org.springframework.stereotype.Repository;
 import ru.yandex.practicum.filmorate.model.FilmsLikes;
 import ru.yandex.practicum.filmorate.storage.BaseRepository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class FilmsLikesDbStorage extends BaseRepository<FilmsLikes> implements FilmsLikesStorage {
@@ -30,34 +27,12 @@ public class FilmsLikesDbStorage extends BaseRepository<FilmsLikes> implements F
         return insert(ADD_LIKE_QUERY, filmId, userId);
     }
 
-    public Map<String, List<String>> getLikes() {
-        Map<String, List<String>> filmsLikes = new HashMap<>();
-        List<String> likesList = null;
-        String filmName = "";
-
-        for(FilmsLikes like : findMany(GET_LIKES_QUERY)) {
-            if (!filmName.equals(like.getFilm().getName())) {
-                likesList = new ArrayList<>();
-                filmName = like.getFilm().getName();
-            }
-
-            likesList.add(like.getUser().getName());
-            filmsLikes.put(filmName, likesList);
-        }
-
-        return filmsLikes;
+    public Collection<FilmsLikes> getLikes() {
+        return findMany(GET_LIKES_QUERY);
     }
 
-    public Map<String, List<String>> getLikesByFilm(int filmId) {
-        Map<String, List<String>> filmsLikes = new HashMap<>();
-        List<String> likesList = new ArrayList<>();
-
-        for(FilmsLikes like : findMany(GET_LIKES_BY_FILM_QUERY, filmId)) {
-            likesList.add(like.getUser().getName());
-            filmsLikes.put(like.getFilm().getName(), likesList);
-        }
-
-        return filmsLikes;
+    public Collection<FilmsLikes> getLikesByFilm(int filmId) {
+        return findMany(GET_LIKES_BY_FILM_QUERY, filmId);
     }
 
     public boolean deleteLike(int filmId, int userId) {

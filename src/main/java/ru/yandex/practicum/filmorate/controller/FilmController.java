@@ -30,12 +30,12 @@ public class FilmController {
 
     @GetMapping("/likes")
     public Map<String, List<String>> getLikes() {
-        return likesStorage.getLikes();
+        return filmService.getLikes(likesStorage);
     }
 
     @GetMapping("/likes/{filmId}")
     public Map<String, List<String>> getLikes(@PathVariable int filmId) {
-        return likesStorage.getLikesByFilm(filmId);
+        return filmService.getLikesByFilm(filmId, likesStorage);
     }
 
     @GetMapping("/popular")
@@ -68,4 +68,26 @@ public class FilmController {
     public boolean deleteLike(@PathVariable int filmId, @PathVariable int userId) {
         return filmService.deleteLike(filmId, userId, likesStorage);
     }
+
+    @GetMapping("/genres")
+    public Collection<String> getGenres() {
+        return filmService.getGenres(filmStorage);
+    }
+
+    @GetMapping("/genres/{id}")
+    public String getGenreByFilm(@PathVariable int id) {
+        return filmService.getGenreByFilm(id, filmStorage);
+    }
+
+    @GetMapping("/mpa")
+    public Collection<String> getRating() {
+        return filmService.getRating(filmStorage);
+    }
+
+    @GetMapping("/mpa/{id}")
+    public String getRatingByFilm(@PathVariable int id) {
+        return filmService.getRatingByFilm(id, filmStorage);
+    }
+
+
 }

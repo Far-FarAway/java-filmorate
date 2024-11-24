@@ -10,7 +10,6 @@ import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.storage.BaseRepository;
 
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.Collection;
 
 @Repository
@@ -48,7 +47,7 @@ public class FilmDbStorage extends BaseRepository<Film> implements FilmStorage {
         return update(UPDATE_FILM_QUERY,
                 film.getName().isBlank() ? oldFilm.getName() : film.getName(),
                 film.getDescription().isBlank() ? oldFilm.getDescription() : film.getDescription(),
-                film.getReleaseDate(),
+                Timestamp.from(film.getReleaseDate()),
                 film.getDuration(),
                 film.getGenre().isBlank() ? oldFilm.getGenre() : film.getGenre(),
                 film.getRating().isBlank() ? oldFilm.getRating() : film.getRating());

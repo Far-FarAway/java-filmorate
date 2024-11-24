@@ -4,9 +4,7 @@ import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 
 @Data
-public class Friends {
-    @PositiveOrZero
-    private int userId;
-    @PositiveOrZero
-    private int friendsId;
+public class FriendList {
+    private User user;
+    private User friends;
 }
