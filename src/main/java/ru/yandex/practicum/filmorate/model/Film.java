@@ -1,11 +1,13 @@
 package ru.yandex.practicum.filmorate.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import ru.yandex.practicum.filmorate.annotation.OnCreate;
 
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +21,6 @@ public class Film {
     @Size(max = 200)
     private String description;
     @NotNull(groups = {OnCreate.class})
-    @PastOrPresent
     private Instant releaseDate;
     @PositiveOrZero
     int duration;
