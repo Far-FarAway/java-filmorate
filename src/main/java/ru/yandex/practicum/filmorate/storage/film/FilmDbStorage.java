@@ -17,7 +17,7 @@ import java.util.List;
 public class FilmDbStorage extends BaseRepository<Film> implements FilmStorage {
     private final static String FIND_FILM_QUERY = "SELECT * FROM films WHERE film_id = ?";
     private final static String FIND_FILMS_QUERY = "SELECT * FROM films";
-    private final static String DELETE_FILM_QUERY = "DELETE FROM films WHERE film_id = ?";
+    private final static String DELETE_FILM_QUERY = "DELETE FROM films WHERE film_id = ? CASCADE";
     private final static String UPDATE_FILM_QUERY = "UPDATE films SET name = ?, description = ?," +
             " release_date = ?, duration = ?, genre = ?, rating = ? " +
             "WHERE film_id = ?";
