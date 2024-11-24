@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS users (
   login VARCHAR NOT NULL,
   email VARCHAR NOT NULL,
   birthday TIMESTAMP WITH TIME ZONE,
-  friend_status VARCHAR NOT NULL
+  friend_status VARCHAR
 );
 
 CREATE TABLE IF NOT EXISTS friends (
