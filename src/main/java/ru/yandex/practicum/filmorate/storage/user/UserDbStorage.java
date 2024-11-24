@@ -13,6 +13,7 @@ import ru.yandex.practicum.filmorate.storage.BaseRepository;
 
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.List;
 
 @Repository
 public class UserDbStorage extends BaseRepository<User> implements UserStorage{
@@ -29,7 +30,7 @@ public class UserDbStorage extends BaseRepository<User> implements UserStorage{
         super(jdbc, mapper);
     }
 
-    public Collection<User> getUsers() {
+    public List<User> getUsers() {
         return findMany(FIND_USERS_QUERY);
     }
 

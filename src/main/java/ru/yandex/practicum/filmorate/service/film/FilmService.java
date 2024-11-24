@@ -2,7 +2,6 @@ package ru.yandex.practicum.filmorate.service.film;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.FilmsLikes;
 import ru.yandex.practicum.filmorate.storage.film.FilmStorage;
@@ -24,7 +23,7 @@ public class FilmService {
         return likeStorage.deleteLike(filmId, userId);
     }
 
-    public Collection<Film> getPopularFilms(int count, FilmStorage storage, FilmsLikesStorage likesStorage) {
+    public Set<Film> getPopularFilms(int count, FilmStorage storage, FilmsLikesStorage likesStorage) {
         Comparator<Film> comparator = new Comparator<Film>() {
             @Override
             public int compare(Film o1, Film o2) {
@@ -69,7 +68,7 @@ public class FilmService {
         return filmsLikes;
     }
 
-    public Collection<String> getGenres(FilmStorage filmStorage) {
+    public Set<String> getGenres(FilmStorage filmStorage) {
         return filmStorage.getFilms()
                 .stream()
                 .map(Film::getGenre)
@@ -80,7 +79,7 @@ public class FilmService {
         return filmStorage.findById(filmId).getGenre();
     }
 
-    public Collection<String> getRating(FilmStorage filmStorage) {
+    public Set<String> getRating(FilmStorage filmStorage) {
         return filmStorage.getFilms()
                 .stream()
                 .map(Film::getRating)

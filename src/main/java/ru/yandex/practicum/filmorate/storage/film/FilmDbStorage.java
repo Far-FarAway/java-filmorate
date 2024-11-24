@@ -11,6 +11,7 @@ import ru.yandex.practicum.filmorate.storage.BaseRepository;
 
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.List;
 
 @Repository
 public class FilmDbStorage extends BaseRepository<Film> implements FilmStorage {
@@ -28,7 +29,7 @@ public class FilmDbStorage extends BaseRepository<Film> implements FilmStorage {
         super(jdbc, mapper);
     }
 
-    public Collection<Film> getFilms() {
+    public List<Film> getFilms() {
         return findMany(FIND_FILMS_QUERY);
     }
 

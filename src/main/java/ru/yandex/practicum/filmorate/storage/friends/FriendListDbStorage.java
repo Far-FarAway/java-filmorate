@@ -27,7 +27,7 @@ public class FriendListDbStorage extends BaseRepository<FriendList> implements F
         return delete(DELETE_FRIEND_QUERY, userId, friendId);
     }
 
-    public Collection<FriendList> getFriends(int userId) {
+    public List<FriendList> getFriends(int userId) {
         return findMany(FIND_FRIENDS_QUERY, userId);
     }
 }

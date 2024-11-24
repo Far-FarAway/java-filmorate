@@ -8,5 +8,5 @@ import java.util.List;
 public interface FriendListStorage {
     boolean addFriend(int userId, int newFriendId);
     boolean deleteFriend(int userId, int friendId);
-    Collection<FriendList> getFriends(int userId);
+    List<FriendList> getFriends(int userId);
 }

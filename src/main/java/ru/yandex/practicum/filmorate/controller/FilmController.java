@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import ru.yandex.practicum.filmorate.annotation.OnCreate;
 import ru.yandex.practicum.filmorate.model.Film;
@@ -24,7 +25,7 @@ public class FilmController {
     FilmService filmService;
 
     @GetMapping
-    public Collection<Film> getFilms() {
+    public List<Film> getFilms() {
         return filmStorage.getFilms();
     }
 
@@ -39,7 +40,7 @@ public class FilmController {
     }
 
     @GetMapping("/popular")
-    public Collection<Film> getPopularFilms(@RequestParam(defaultValue = "10") int count) {
+    public Set<Film> getPopularFilms(@RequestParam(defaultValue = "10") int count) {
         return filmService.getPopularFilms(count, filmStorage, likesStorage);
     }
 
@@ -70,7 +71,7 @@ public class FilmController {
     }
 
     @GetMapping("/genres")
-    public Collection<String> getGenres() {
+    public Set<String> getGenres() {
         return filmService.getGenres(filmStorage);
     }
 
@@ -80,7 +81,7 @@ public class FilmController {
     }
 
     @GetMapping("/mpa")
-    public Collection<String> getRating() {
+    public Set<String> getRating() {
         return filmService.getRating(filmStorage);
     }
 

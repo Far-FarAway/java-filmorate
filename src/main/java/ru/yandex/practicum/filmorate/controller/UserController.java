@@ -22,7 +22,7 @@ public class UserController {
     UserService userService;
 
     @GetMapping
-    public Collection<User> getUsers() {
+    public List<User> getUsers() {
         return userStorage.getUsers();
     }
 

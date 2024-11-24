@@ -27,11 +27,11 @@ public class FilmsLikesDbStorage extends BaseRepository<FilmsLikes> implements F
         return insert(ADD_LIKE_QUERY, filmId, userId);
     }
 
-    public Collection<FilmsLikes> getLikes() {
+    public List<FilmsLikes> getLikes() {
         return findMany(GET_LIKES_QUERY);
     }
 
-    public Collection<FilmsLikes> getLikesByFilm(int filmId) {
+    public List<FilmsLikes> getLikesByFilm(int filmId) {
         return findMany(GET_LIKES_BY_FILM_QUERY, filmId);
     }
 
