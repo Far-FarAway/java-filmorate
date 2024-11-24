@@ -16,7 +16,7 @@ import java.util.Map;
 @Repository
 public class FilmsLikesDbStorage extends BaseRepository<FilmsLikes> implements FilmsLikesStorage {
     private final static String ADD_LIKE_QUERY = "INSERT INTO films_likes(film_id, user_id) " +
-            "VALUES (?, ?) returning film_id";
+            "VALUES (?, ?)";
     private final static String GET_LIKES_QUERY = "SELECT * FROM films_likes";
     private final static String GET_LIKES_BY_FILM_QUERY = "SELECT * FROM films_likes WHERE film_id = ?";
     private final static String DELETE_LIKE_QUERY = "DELETE FROM films_likes WHERE film_id = ? and user_id = ?";
