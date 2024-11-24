@@ -1,6 +1,7 @@
 package ru.yandex.practicum.filmorate.storage.friends;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.model.FriendList;
@@ -11,6 +12,7 @@ import java.sql.SQLException;
 
 @Component
 @RequiredArgsConstructor
+@Qualifier("friendListRowMapper")
 public class FriendListRowMapper implements RowMapper<FriendList> {
     private final UserStorage storage;
 

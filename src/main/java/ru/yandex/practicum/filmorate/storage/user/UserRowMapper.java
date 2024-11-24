@@ -1,5 +1,6 @@
 package ru.yandex.practicum.filmorate.storage.user;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.model.FriendStatus;
@@ -9,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Component
+@Qualifier("userRowMapper")
 public class UserRowMapper implements RowMapper<User> {
     @Override
     public User mapRow(ResultSet results, int roeNum) throws SQLException {
