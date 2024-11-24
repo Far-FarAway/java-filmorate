@@ -21,7 +21,8 @@ public class UserDbStorage extends BaseRepository<User> implements UserStorage{
     private final static String FIND_USERS_QUERY = "SELECT * FROM users";
     private final static String DELETE_USER_QUERY = "DELETE FROM users WHERE user_id = ?";
     private final static String UPDATE_USER_QUERY = "UPDATE users SET name = ?, login = ?," +
-            " email = ?, birthday = ?, friend_status = ?";
+            " email = ?, birthday = ?, friend_status = ? " +
+            "WHERE user_id = ?";
     private final static String INSERT_USER_QUERY = "INSERT INTO users(name, login, email, birthday, friend_status)" +
             " VALUES (?, ?, ?, ?, ?)";
 
@@ -50,7 +51,8 @@ public class UserDbStorage extends BaseRepository<User> implements UserStorage{
                 user.getLogin().isBlank() ? oldUser.getLogin() : user.getLogin(),
                 user.getEmail().isBlank() ? oldUser.getEmail() : user.getEmail(),
                 user.getBirthday(),
-                user.getFriendStatus().toString());
+                user.getFriendStatus().toString(),
+                user.getId());
     }
 
     public boolean deleteUser(int userId) {
