@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.List;
 
 public interface FriendListStorage {
-    boolean addFriend(int userId, int newFriendId);
+    int addFriend(int userId, int newFriendId);
     boolean deleteFriend(int userId, int friendId);
     List<FriendList> getFriends(int userId);
 }

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface FilmsLikesStorage {
-    boolean addLike(int filmId, int userId);
+    int addLike(int filmId, int userId);
     List<FilmsLikes> getLikes();
     List<FilmsLikes> getLikesByFilm(int filmId);
     boolean deleteLike(int filmId, int userId);

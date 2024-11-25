@@ -19,7 +19,7 @@ public class FriendListDbStorage extends BaseRepository<FriendList> implements F
         super(jdbc, mapper);
     }
 
-    public boolean addFriend(int userId, int newFriendId) {
+    public int addFriend(int userId, int newFriendId) {
         return insert(ADD_FRIEND_QUERY, newFriendId, userId);
     }
 

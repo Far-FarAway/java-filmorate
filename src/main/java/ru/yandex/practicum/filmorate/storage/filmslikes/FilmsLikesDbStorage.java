@@ -23,7 +23,7 @@ public class FilmsLikesDbStorage extends BaseRepository<FilmsLikes> implements F
         super (jdbc, mapper);
     }
 
-    public boolean addLike(int filmId, int userId) {
+    public int addLike(int filmId, int userId) {
         return insert(ADD_LIKE_QUERY, filmId, userId);
     }
 
