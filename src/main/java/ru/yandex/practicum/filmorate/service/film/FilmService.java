@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 public class FilmService {
-    public boolean addLike(int filmId, int userId, FilmsLikesStorage likesStorage) {
+    public int addLike(int filmId, int userId, FilmsLikesStorage likesStorage) {
         log.info("Добавление лайка фильму(id: {}) от пользователя(id: {})", filmId, userId);
         return likesStorage.addLike(filmId, userId);
     }

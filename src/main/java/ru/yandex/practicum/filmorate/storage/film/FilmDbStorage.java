@@ -35,14 +35,16 @@ public class FilmDbStorage extends BaseRepository<Film> implements FilmStorage {
         return findMany(FIND_FILMS_QUERY);
     }
 
-    public boolean postFilm(Film film) {
-        return insert(INSERT_FILM_QUERY,
+    public Film postFilm(Film film) {
+            int id = insert(INSERT_FILM_QUERY,
                 film.getName(),
                 film.getDescription(),
                 Timestamp.from(film.getReleaseDate()),
                 film.getDuration(),
                 film.getGenre(),
                 film.getRating());
+            film.setId(id);
+            return film;
     }
 
     public boolean updateFilm(Film film) {

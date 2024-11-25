@@ -8,7 +8,7 @@ import java.util.List;
 public interface FilmStorage {
     List<Film> getFilms();
 
-    boolean postFilm(Film film);
+    Film postFilm(Film film);
 
     boolean updateFilm(Film film);
 

@@ -46,12 +46,12 @@ public class FilmController {
 
     @PostMapping
     @Validated({OnCreate.class})
-    public boolean postFilm(@Valid @RequestBody Film film) {
+    public Film postFilm(@Valid @RequestBody Film film) {
         return filmStorage.postFilm(film);
     }
 
     @PutMapping("/{filmId}/like/{userId}")
-    public boolean addLike(@PathVariable int filmId, @PathVariable int userId) {
+    public int addLike(@PathVariable int filmId, @PathVariable int userId) {
         return filmService.addLike(filmId, userId, likesStorage);
     }
 
