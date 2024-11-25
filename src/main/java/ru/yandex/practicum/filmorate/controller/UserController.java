@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import ru.yandex.practicum.filmorate.exception.InternalServerException;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.user.UserService;
 import ru.yandex.practicum.filmorate.storage.friends.FriendListStorage;
@@ -37,12 +38,12 @@ public class UserController {
     }
 
     @PostMapping
-    public boolean postUser(@Valid @RequestBody User user) {
+    public User postUser(@Valid @RequestBody User user) {
         return userStorage.postUser(user);
     }
 
     @PutMapping("/{userId}/friends/{friendId}")
-    public boolean addFriend(@PathVariable int userId, @PathVariable int friendId) {
+    public int addFriend(@PathVariable int userId, @PathVariable int friendId) {
         return userService.addFriend(userId, friendId, friendListStorage);
     }
 
