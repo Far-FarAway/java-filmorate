@@ -8,7 +8,10 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 import ru.yandex.practicum.filmorate.exception.InternalServerException;
 
+import javax.sql.DataSource;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,13 +47,22 @@ public class BaseRepository<T> {
         }
     }
 
-    protected boolean insert(String query, Object... params) {
-        int rows = jdbc.update(query, params);
+    protected int insert(String query, Object... params) {
+        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 
-        if (rows == 0) {
-            throw new InternalServerException("Не удалось вставить данные");
+        jdbc.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+            for (int idx = 0; idx < params.length; idx++) {
+                ps.setObject(idx + 1, params[idx]);
+            }
+            return ps;
+        }, keyHolder);
+        Integer id = keyHolder.getKeyAs(Integer.class);
+
+        if (id != null) {
+            return id;
         } else {
-            return true;
+            throw new InternalServerException("Не удалось сохранить данные");
         }
     }
 }
