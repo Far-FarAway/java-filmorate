@@ -1,7 +1,10 @@
 package ru.yandex.practicum.filmorate.service.user;
 
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ru.yandex.practicum.filmorate.exception.InternalServerException;
+import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.FriendList;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.friends.FriendListStorage;
@@ -12,7 +15,7 @@ import java.util.*;
 @Service
 @Slf4j
 public class UserService {
-    public boolean addFriend(int userId, int friendId, FriendListStorage friendListStorage) {
+    public int addFriend(int userId, int friendId, FriendListStorage friendListStorage) {
         log.info("Добавление нового друга");
         return friendListStorage.addFriend(userId, friendId);
     }
@@ -49,6 +52,4 @@ public class UserService {
         log.info("Удаление из списка друзей пользователя(id: {}) друга с id {}", userId, friendId);
         return friendListStorage.deleteFriend(userId, friendId);
     }
-
-
 }
