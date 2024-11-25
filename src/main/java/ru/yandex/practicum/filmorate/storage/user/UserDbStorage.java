@@ -1,5 +1,6 @@
 package ru.yandex.practicum.filmorate.storage.user;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -36,13 +37,15 @@ public class UserDbStorage extends BaseRepository<User> implements UserStorage{
         return findMany(FIND_USERS_QUERY);
     }
 
-    public boolean postUser(User user) {
-        return insert(INSERT_USER_QUERY,
+    public User postUser(User user) {
+         int id = insert(INSERT_USER_QUERY,
                 user.getName(),
                 user.getLogin(),
                 user.getEmail(),
                 Timestamp.from(user.getBirthday()),
                 user.getFriendStatus() == null ? null : user.getFriendStatus().toString());
+         user.setId(id);
+         return user;
     }
 
     public boolean updateUser(User user) {
