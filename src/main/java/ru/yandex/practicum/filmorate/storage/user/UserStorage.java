@@ -8,7 +8,7 @@ import java.util.List;
 public interface UserStorage {
     List<User> getUsers();
 
-    boolean postUser(User user);
+    User postUser(User user);
 
     boolean updateUser(User user);
 
