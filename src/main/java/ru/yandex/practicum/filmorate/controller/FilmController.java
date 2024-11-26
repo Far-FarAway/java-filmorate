@@ -32,6 +32,11 @@ public class FilmController {
         return filmStorage.getFilms();
     }
 
+    @GetMapping("/{id}")
+    public Film getFilm(@PathVariable int id) {
+        return filmStorage.findById(id);
+    }
+
     @GetMapping("/likes")
     public Map<String, List<String>> getLikes() {
         return filmService.getLikes(likesStorage);
