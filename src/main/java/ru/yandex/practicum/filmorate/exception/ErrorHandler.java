@@ -20,6 +20,12 @@ public class ErrorHandler {
         return new ErrorResponse("Валидация данных не прошла: " + ex.getMessage());
     }
 
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleDuplicateDataException(final DuplicateDataException ex) {
+        return new ErrorResponse("Дублирование данных: " + ex.getMessage());
+    }
+
     @ExceptionHandler({Throwable.class, InternalServerException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleUnexpectedException(final Throwable ex) {
