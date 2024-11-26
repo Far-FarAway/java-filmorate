@@ -24,7 +24,5 @@ public class Film {
     @PositiveOrZero
     int duration;
     private Set<Genre> genres;
-    @NotNull(groups = {OnCreate.class})
-    @NotBlank(groups = {OnCreate.class})
-    private String mpa;
+    private Mpa mpa;
 }
