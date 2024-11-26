@@ -25,8 +25,6 @@ import ru.yandex.practicum.filmorate.storage.mpa.MpaStorage;
 public class FilmController {
     FilmStorage filmStorage;
     FilmsLikesStorage likesStorage;
-    GenreStorage genreStorage;
-    MpaStorage mpaStorage;
     FilmService filmService;
 
     @GetMapping
@@ -75,43 +73,13 @@ public class FilmController {
         return filmService.deleteLike(filmId, userId, likesStorage);
     }
 
-    @PostMapping("/genres")
-    public Genre postGenre(@RequestBody Genre genre) {
-        return genreStorage.postGenre(genre);
-    }
-
-    @GetMapping("/genres")
-    public List<Genre> getGenres() {
-        return filmService.getGenres(genreStorage);
-    }
-
     @GetMapping("/genres/{id}")
     public Set<Genre> getGenreByFilm(@PathVariable int id) {
         return filmService.getGenreByFilm(id, filmStorage);
     }
 
-    @DeleteMapping("/genres/{id}")
-    public boolean deleteGenre(@PathVariable int id) {
-        return genreStorage.deleteGenre(id);
-    }
-
-    @PostMapping("/mpa")
-    public Mpa postMpa(@RequestBody Mpa mpa) {
-        return mpaStorage.postMpa(mpa);
-    }
-
-    @GetMapping("/mpa")
-    public List<Mpa> getMpas() {
-        return filmService.getMpas(mpaStorage);
-    }
-
     @GetMapping("/mpa/{id}")
     public Mpa getMpaByFilm(@PathVariable int id) {
         return filmService.getMpaByFilm(id, filmStorage);
-    }
-
-    @DeleteMapping("/mpa/{id}")
-    public boolean deleteMpa(@PathVariable int id) {
-        return filmService.deleteMpa(id, mpaStorage);
     }
 }

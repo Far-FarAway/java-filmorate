@@ -71,31 +71,12 @@ public class FilmService {
         return filmsLikes;
     }
 
-    public Genre getGenre(int genreId, GenreStorage genreStorage) {
-        return genreStorage.getGenre(genreId);
-    }
-
-    public List<Genre> getGenres(GenreStorage genreStorage) {
-        return genreStorage.getGenres();
-    }
-
     public Set<Genre> getGenreByFilm(int filmId, FilmStorage filmStorage) {
         return filmStorage.findById(filmId).getGenres();
-    }
-
-    public Mpa getMpa(int mpaId, MpaStorage mpaStorage) {
-        return mpaStorage.getMpa(mpaId);
-    }
-
-    public List<Mpa> getMpas(MpaStorage mpaStorage) {
-        return mpaStorage.getMpas();
     }
 
     public Mpa getMpaByFilm(int filmId, FilmStorage filmStorage) {
         return filmStorage.findById(filmId).getMpa();
     }
 
-    public boolean deleteMpa(int mpaId, MpaStorage mpaStorage) {
-        return mpaStorage.deleteMpa(mpaId);
-    }
 }
