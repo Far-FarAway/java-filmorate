@@ -31,11 +31,16 @@ public class FilmRowMapper implements RowMapper<Film> {
         film.setDuration(results.getInt("duration"));
 
         Set<Genre> genresList = new HashSet<>();
-        genresList.add(genreStorage.getGenre(results.getInt("genre_id")));
-        film.setGenres(genresList);
+        if (results.getInt("genre_id") != 0) {
+            genresList.add(genreStorage.getGenre(results.getInt("genre_id")));
+            film.setGenres(genresList);
+        } else {
+            film.setGenres(genresList);
+        }
 
-        film.setMpa(mpaStorage.getMpa(results.getInt("mpa_id")));
-
+        if (results.getInt("mpa_id") != 0) {
+            film.setMpa(mpaStorage.getMpa(results.getInt("mpa_id")));
+        }
         return film;
     }
 }
