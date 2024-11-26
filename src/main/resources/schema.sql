@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS films (
   release_date TIMESTAMP WITH TIME ZONE NOT NULL,
   duration INTEGER NOT NULL,
   genre VARCHAR,
-  rating VARCHAR NOT NULL
+  rating VARCHAR
 );
 
 CREATE TABLE IF NOT EXISTS films_likes (
