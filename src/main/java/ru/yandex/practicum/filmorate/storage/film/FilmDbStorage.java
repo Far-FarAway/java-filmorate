@@ -102,7 +102,7 @@ public class FilmDbStorage extends BaseRepository<Film> implements FilmStorage {
                         Timestamp.from(film.getReleaseDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
                         film.getDuration(),
                         genre.getId(),
-                        film.getMpa().isBlank() ? oldFilm.getMpa() : film.getMpa());
+                        film.getMpa() == null ? oldFilm.getMpa() : film.getMpa());
             }
 
             return true;
@@ -113,7 +113,7 @@ public class FilmDbStorage extends BaseRepository<Film> implements FilmStorage {
                     Timestamp.from(film.getReleaseDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
                     film.getDuration(),
                     null,
-                    film.getMpa().isBlank() ? oldFilm.getMpa() : film.getMpa());
+                    film.getMpa() == null ? oldFilm.getMpa() : film.getMpa());
 
             return true;
         } else {
@@ -124,7 +124,7 @@ public class FilmDbStorage extends BaseRepository<Film> implements FilmStorage {
                         Timestamp.from(film.getReleaseDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
                         film.getDuration(),
                         genre.getId(),
-                        film.getMpa().isBlank() ? oldFilm.getMpa() : film.getMpa());
+                        film.getMpa() == null ? oldFilm.getMpa() : film.getMpa());
             }
 
             return true;
