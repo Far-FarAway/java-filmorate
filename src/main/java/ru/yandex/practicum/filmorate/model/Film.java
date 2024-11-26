@@ -1,17 +1,13 @@
 package ru.yandex.practicum.filmorate.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import ru.yandex.practicum.filmorate.LocalDateToInstantDeserializer;
 import ru.yandex.practicum.filmorate.annotation.OnCreate;
 
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Data
 public class Film {
@@ -23,12 +19,12 @@ public class Film {
     @Size(max = 200)
     private String description;
     @NotNull(groups = {OnCreate.class})
-    @JsonDeserialize(using = LocalDateToInstantDeserializer.class)
-    private Instant releaseDate;
+    @PastOrPresent
+    private LocalDate releaseDate;
     @PositiveOrZero
     int duration;
-    private String genre;
+    private Set<Genre> genres;
     @NotNull(groups = {OnCreate.class})
     @NotBlank(groups = {OnCreate.class})
-    private String rating;
+    private String mpa;
 }
