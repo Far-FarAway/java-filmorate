@@ -8,7 +8,9 @@ import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.Genre;
 import ru.yandex.practicum.filmorate.storage.BaseRepository;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public class GenreDbStorage extends BaseRepository<Genre> implements GenreStorage {
@@ -24,8 +26,8 @@ public class GenreDbStorage extends BaseRepository<Genre> implements GenreStorag
         return findOne(FIND_GENRE_QUERY, genreId).orElseThrow(() -> new NotFoundException("Жанр не найден"));
     }
 
-    public List<Genre> getGenres() {
-        return findMany(FIND_GENRES_QUERY);
+    public Set<Genre> getGenres() {
+        return new HashSet<>(findMany(FIND_GENRES_QUERY));
     }
 
     public boolean deleteGenre(int genreId) {
