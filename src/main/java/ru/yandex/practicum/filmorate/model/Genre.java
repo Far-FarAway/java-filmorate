@@ -8,6 +8,6 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(of = {"name"})
 public class Genre {
     @PositiveOrZero
-    int id;
-    String name;
+    private int id;
+    private String name;
 }
