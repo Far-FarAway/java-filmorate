@@ -36,7 +36,8 @@ public class GenreDbStorage extends BaseRepository<Genre> implements GenreStorag
     }
 
     public Genre getGenre(int genreId) {
-        return findOne(FIND_GENRE_QUERY, genreId).orElseThrow(() -> new NotFoundException("Жанр не найден"));
+        return findOne(FIND_GENRE_QUERY, genreId)
+                .orElseThrow(() -> new NotFoundException("Жанр с id " + genreId + " не найден"));
     }
 
     public List<Genre> getGenres() {
