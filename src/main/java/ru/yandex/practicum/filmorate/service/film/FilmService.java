@@ -5,12 +5,13 @@ import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.FilmsLikes;
 import ru.yandex.practicum.filmorate.model.Genre;
+import ru.yandex.practicum.filmorate.model.Mpa;
 import ru.yandex.practicum.filmorate.storage.film.FilmStorage;
 import ru.yandex.practicum.filmorate.storage.filmslikes.FilmsLikesStorage;
 import ru.yandex.practicum.filmorate.storage.genre.GenreStorage;
+import ru.yandex.practicum.filmorate.storage.mpa.MpaStorage;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -70,7 +71,11 @@ public class FilmService {
         return filmsLikes;
     }
 
-    public Set<Genre> getGenres(GenreStorage genreStorage) {
+    public Genre getGenre(int genreId, GenreStorage genreStorage) {
+        return genreStorage.getGenre(genreId);
+    }
+
+    public List<Genre> getGenres(GenreStorage genreStorage) {
         return genreStorage.getGenres();
     }
 
@@ -78,14 +83,19 @@ public class FilmService {
         return filmStorage.findById(filmId).getGenres();
     }
 
-    public Set<String> getRating(FilmStorage filmStorage) {
-        return filmStorage.getFilms()
-                .stream()
-                .map(Film::getMpa)
-                .collect(Collectors.toSet());
+    public Mpa getMpa(int mpaId, MpaStorage mpaStorage) {
+        return mpaStorage.getMpa(mpaId);
     }
 
-    public String getRatingByFilm(int filmId, FilmStorage filmStorage) {
+    public List<Mpa> getMpas(MpaStorage mpaStorage) {
+        return mpaStorage.getMpas();
+    }
+
+    public Mpa getMpaByFilm(int filmId, FilmStorage filmStorage) {
         return filmStorage.findById(filmId).getMpa();
+    }
+
+    public boolean deleteMpa(int mpaId, MpaStorage mpaStorage) {
+        return mpaStorage.deleteMpa(mpaId);
     }
 }
