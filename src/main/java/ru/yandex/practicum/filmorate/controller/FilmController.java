@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -13,10 +12,12 @@ import java.util.Set;
 import ru.yandex.practicum.filmorate.annotation.OnCreate;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.Genre;
+import ru.yandex.practicum.filmorate.model.Mpa;
 import ru.yandex.practicum.filmorate.service.film.FilmService;
 import ru.yandex.practicum.filmorate.storage.film.FilmStorage;
 import ru.yandex.practicum.filmorate.storage.filmslikes.FilmsLikesStorage;
 import ru.yandex.practicum.filmorate.storage.genre.GenreStorage;
+import ru.yandex.practicum.filmorate.storage.mpa.MpaStorage;
 
 @RestController
 @RequestMapping("/films")
@@ -25,6 +26,7 @@ public class FilmController {
     FilmStorage filmStorage;
     FilmsLikesStorage likesStorage;
     GenreStorage genreStorage;
+    MpaStorage mpaStorage;
     FilmService filmService;
 
     @GetMapping
@@ -93,15 +95,23 @@ public class FilmController {
         return genreStorage.deleteGenre(id);
     }
 
+    @PostMapping("/mpa")
+    public Mpa postMpa(@RequestBody Mpa mpa) {
+        return mpaStorage.postMpa(mpa);
+    }
+
     @GetMapping("/mpa")
-    public Set<String> getRating() {
-        return filmService.getRating(filmStorage);
+    public List<Mpa> getMpas() {
+        return filmService.getMpas(mpaStorage);
     }
 
     @GetMapping("/mpa/{id}")
-    public String getRatingByFilm(@PathVariable int id) {
-        return filmService.getRatingByFilm(id, filmStorage);
+    public Mpa getMpaByFilm(@PathVariable int id) {
+        return filmService.getMpaByFilm(id, filmStorage);
     }
 
-
+    @DeleteMapping("/mpa/{id}")
+    public boolean deleteMpa(@PathVariable int id) {
+        return filmService.deleteMpa(id, mpaStorage);
+    }
 }
