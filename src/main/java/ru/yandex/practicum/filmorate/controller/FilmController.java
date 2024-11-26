@@ -79,13 +79,18 @@ public class FilmController {
     }
 
     @GetMapping("/genres")
-    public Set<Genre> getGenres() {
+    public List<Genre> getGenres() {
         return filmService.getGenres(genreStorage);
     }
 
     @GetMapping("/genres/{id}")
     public Set<Genre> getGenreByFilm(@PathVariable int id) {
         return filmService.getGenreByFilm(id, filmStorage);
+    }
+
+    @DeleteMapping("/genres/{id}")
+    public boolean deleteGenre(@PathVariable int id) {
+        return genreStorage.deleteGenre(id);
     }
 
     @GetMapping("/mpa")
