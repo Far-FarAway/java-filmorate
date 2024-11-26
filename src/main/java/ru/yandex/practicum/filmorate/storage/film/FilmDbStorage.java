@@ -69,7 +69,7 @@ public class FilmDbStorage extends BaseRepository<Film> implements FilmStorage {
                     Timestamp.from(film.getReleaseDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
                     film.getDuration(),
                     null,
-                    film.getMpa());
+                    film.getMpa().getId());
             film.setId(id);
             return film;
         } else {
@@ -80,7 +80,7 @@ public class FilmDbStorage extends BaseRepository<Film> implements FilmStorage {
                         Timestamp.from(film.getReleaseDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
                         film.getDuration(),
                         genre.getId(),
-                        film.getMpa());
+                        film.getMpa().getId());
             }
             film.setId(id);
             return film;
@@ -102,7 +102,7 @@ public class FilmDbStorage extends BaseRepository<Film> implements FilmStorage {
                         Timestamp.from(film.getReleaseDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
                         film.getDuration(),
                         genre.getId(),
-                        film.getMpa() == null ? oldFilm.getMpa() : film.getMpa());
+                        film.getMpa() == null ? oldFilm.getMpa().getId() : film.getMpa().getId());
             }
 
             return true;
@@ -113,7 +113,7 @@ public class FilmDbStorage extends BaseRepository<Film> implements FilmStorage {
                     Timestamp.from(film.getReleaseDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
                     film.getDuration(),
                     null,
-                    film.getMpa() == null ? oldFilm.getMpa() : film.getMpa());
+                    film.getMpa() == null ? oldFilm.getMpa().getId() : film.getMpa().getId());
 
             return true;
         } else {
@@ -124,7 +124,7 @@ public class FilmDbStorage extends BaseRepository<Film> implements FilmStorage {
                         Timestamp.from(film.getReleaseDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
                         film.getDuration(),
                         genre.getId(),
-                        film.getMpa() == null ? oldFilm.getMpa() : film.getMpa());
+                        film.getMpa() == null ? oldFilm.getMpa().getId() : film.getMpa().getId());
             }
 
             return true;
@@ -149,7 +149,5 @@ public class FilmDbStorage extends BaseRepository<Film> implements FilmStorage {
         } else {
             return filmList.getFirst();
         }
-
-        //return findOne(FIND_FILM_QUERY, filmId).orElseThrow(() -> new NotFoundException("Фильм не найден"));
     }
 }
