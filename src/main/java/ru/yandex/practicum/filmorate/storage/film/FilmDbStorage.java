@@ -56,7 +56,7 @@ public class FilmDbStorage extends BaseRepository<Film> implements FilmStorage {
             return newFilmList;
         }
 
-        return newFilmList;
+        return filmList;
     }
 
     public Film postFilm(Film film) {
