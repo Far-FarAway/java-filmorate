@@ -12,9 +12,11 @@ import java.util.Set;
 
 import ru.yandex.practicum.filmorate.annotation.OnCreate;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.model.Genre;
 import ru.yandex.practicum.filmorate.service.film.FilmService;
 import ru.yandex.practicum.filmorate.storage.film.FilmStorage;
 import ru.yandex.practicum.filmorate.storage.filmslikes.FilmsLikesStorage;
+import ru.yandex.practicum.filmorate.storage.genre.GenreStorage;
 
 @RestController
 @RequestMapping("/films")
@@ -22,6 +24,7 @@ import ru.yandex.practicum.filmorate.storage.filmslikes.FilmsLikesStorage;
 public class FilmController {
     FilmStorage filmStorage;
     FilmsLikesStorage likesStorage;
+    GenreStorage genreStorage;
     FilmService filmService;
 
     @GetMapping
@@ -71,12 +74,12 @@ public class FilmController {
     }
 
     @GetMapping("/genres")
-    public Set<String> getGenres() {
-        return filmService.getGenres(filmStorage);
+    public Set<Genre> getGenres() {
+        return filmService.getGenres(genreStorage);
     }
 
     @GetMapping("/genres/{id}")
-    public String getGenreByFilm(@PathVariable int id) {
+    public Set<Genre> getGenreByFilm(@PathVariable int id) {
         return filmService.getGenreByFilm(id, filmStorage);
     }
 

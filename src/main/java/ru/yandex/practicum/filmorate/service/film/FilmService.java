@@ -4,8 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.FilmsLikes;
+import ru.yandex.practicum.filmorate.model.Genre;
 import ru.yandex.practicum.filmorate.storage.film.FilmStorage;
 import ru.yandex.practicum.filmorate.storage.filmslikes.FilmsLikesStorage;
+import ru.yandex.practicum.filmorate.storage.genre.GenreStorage;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -68,25 +70,22 @@ public class FilmService {
         return filmsLikes;
     }
 
-    public Set<String> getGenres(FilmStorage filmStorage) {
-        return filmStorage.getFilms()
-                .stream()
-                .map(Film::getGenre)
-                .collect(Collectors.toSet());
+    public Set<Genre> getGenres(GenreStorage genreStorage) {
+        return genreStorage.getGenres();
     }
 
-    public String getGenreByFilm(int filmId, FilmStorage filmStorage) {
-        return filmStorage.findById(filmId).getGenre();
+    public Set<Genre> getGenreByFilm(int filmId, FilmStorage filmStorage) {
+        return filmStorage.findById(filmId).getGenres();
     }
 
     public Set<String> getRating(FilmStorage filmStorage) {
         return filmStorage.getFilms()
                 .stream()
-                .map(Film::getRating)
+                .map(Film::getMpa)
                 .collect(Collectors.toSet());
     }
 
     public String getRatingByFilm(int filmId, FilmStorage filmStorage) {
-        return filmStorage.findById(filmId).getRating();
+        return filmStorage.findById(filmId).getMpa();
     }
 }
