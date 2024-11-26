@@ -73,6 +73,11 @@ public class FilmController {
         return filmService.deleteLike(filmId, userId, likesStorage);
     }
 
+    @PostMapping("/genres")
+    public Genre postGenre(@RequestBody Genre genre) {
+        return genreStorage.postGenre(genre);
+    }
+
     @GetMapping("/genres")
     public Set<Genre> getGenres() {
         return filmService.getGenres(genreStorage);
