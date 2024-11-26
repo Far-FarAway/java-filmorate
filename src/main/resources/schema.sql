@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS films (
   description VARCHAR,
   release_date TIMESTAMP WITH TIME ZONE NOT NULL,
   duration INTEGER NOT NULL,
-  genre_id VARCHAR REFERENCES genres(genre_id),
+  genre_id INTEGER REFERENCES genres(genre_id),
   rating VARCHAR
 );
 
