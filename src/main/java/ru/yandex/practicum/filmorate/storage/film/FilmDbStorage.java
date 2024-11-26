@@ -35,7 +35,6 @@ public class FilmDbStorage extends BaseRepository<Film> implements FilmStorage {
     }
 
     public List<Film> getFilms() {
-        //Список вроде не хранит данные по порядку, так что момент  проверкой id может выдать ошибку
         List<Film> filmList = findMany(FIND_FILMS_QUERY);
         List<Film> newFilmList = new ArrayList<>();
 
