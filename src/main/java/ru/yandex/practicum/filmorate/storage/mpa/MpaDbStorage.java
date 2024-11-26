@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import ru.yandex.practicum.filmorate.exception.DuplicateDataException;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.Mpa;
 import ru.yandex.practicum.filmorate.storage.BaseRepository;
@@ -22,9 +23,13 @@ public class MpaDbStorage extends BaseRepository<Mpa> implements MpaStorage {
     }
 
     public Mpa postMpa(Mpa mpa) {
-        int id = insert(POST_MPA_QUERY, mpa.getName());
-        mpa.setId(id);
-        return mpa;
+        if (!getMpas().contains(mpa)) {
+            int id = insert(POST_MPA_QUERY, mpa.getName());
+            mpa.setId(id);
+            return mpa;
+        } else {
+            throw new DuplicateDataException("Рейтинг " + mpa.getName() + " уже существует");
+        }
     }
 
     public Mpa getMpa(int mpaId) {
