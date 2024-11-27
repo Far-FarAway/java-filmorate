@@ -74,7 +74,8 @@ public class FilmDbStorage extends BaseRepository<Film> implements FilmStorage {
                 film.getDescription(),
                 Timestamp.from(film.getReleaseDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
                 film.getDuration(),
-                film.getMpa() == null ? mpaId : film.getMpa().getId());
+                film.getMpa() == null ? mpaId : film.getMpa().getId(),
+                film.getId());
 
         return film;
     }
