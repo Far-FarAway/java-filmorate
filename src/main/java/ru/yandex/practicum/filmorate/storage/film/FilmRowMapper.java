@@ -5,19 +5,16 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.model.Genre;
 import ru.yandex.practicum.filmorate.storage.genre.GenreStorage;
 import ru.yandex.practicum.filmorate.storage.mpa.MpaStorage;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
 
 @Component
 @Qualifier("filmRowMapper")
 @RequiredArgsConstructor
 public class FilmRowMapper implements RowMapper<Film> {
-    private final GenreStorage genreStorage;
     private final MpaStorage mpaStorage;
 
     @Override
