@@ -50,8 +50,8 @@ public class FilmController {
     }
 
     @GetMapping("/popular")
-    public Set<Film> getPopularFilms(@RequestParam(defaultValue = "10") int count) {
-        return filmService.getPopularFilms(count, filmStorage, likesStorage);
+    public List<Film> getPopularFilms(@RequestParam(defaultValue = "10") int count) {
+        return filmService.getPopularFilms(count);
     }
 
     @PostMapping
