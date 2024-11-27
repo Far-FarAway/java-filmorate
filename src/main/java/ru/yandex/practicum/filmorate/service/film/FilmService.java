@@ -22,7 +22,16 @@ public class FilmService {
     private final FilmsGenresStorage filmsGenresStorage;
     private final GenreStorage genreStorage;
 
-
+    public List<Film> getFilms() {
+        List<Film> filmList = filmStorage.getFilms();
+        filmList.forEach(film -> {
+            List<FilmsGenres> filmsGenres = filmsGenresStorage.getGenreByFilm(film.getId());
+            for(FilmsGenres filmGenres : filmsGenres) {
+                film.getGenres().add(genreStorage.getGenre(filmGenres.getGenreId()));
+            }
+        });
+        return filmList;
+    }
 
     public Film postFilm(Film film) {
         List<Genre> filmsGenres = film.getGenres();
