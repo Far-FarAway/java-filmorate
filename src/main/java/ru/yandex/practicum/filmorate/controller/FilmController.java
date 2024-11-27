@@ -64,8 +64,8 @@ public class FilmController {
     }
 
     @PutMapping
-    public boolean updateFilm(@Valid @RequestBody Film film) {
-        return filmStorage.updateFilm(film);
+    public Film updateFilm(@Valid @RequestBody Film film) {
+        return filmService.updateFilm(film);
     }
 
     @DeleteMapping("/{filmId}")
