@@ -13,6 +13,7 @@ import ru.yandex.practicum.filmorate.storage.BaseRepository;
 import java.sql.Timestamp;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -26,8 +27,8 @@ public class FilmDbStorage extends BaseRepository<Film> implements FilmStorage {
             " release_date = ?, duration = ?, genre_id = ?, mpa_id = ? " +
             "WHERE film_id = ?";
     private final static String INSERT_FILM_QUERY = "INSERT INTO films(name, description, release_date, duration," +
-            " genre_id, mpa_id) " +
-            "VALUES (?, ?, ?, ?, ?, ?)";
+            " mpa_id) " +
+            "VALUES (?, ?, ?, ?, ?)";
 
     @Autowired
     public FilmDbStorage(JdbcTemplate jdbc, @Qualifier("filmRowMapper") RowMapper<Film> mapper) {
@@ -59,75 +60,43 @@ public class FilmDbStorage extends BaseRepository<Film> implements FilmStorage {
     }
 
     public Film postFilm(Film film) {
-        Set<Genre> genres = film.getGenres();
-        int id = -3;
-        if (genres == null) {
-            id = insert(INSERT_FILM_QUERY,
-                    film.getName(),
-                    film.getDescription(),
-                    Timestamp.from(film.getReleaseDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
-                    film.getDuration(),
-                    null,
-                    film.getMpa().getId());
-            film.setId(id);
-            return film;
-        } else {
-            for (Genre genre : genres) {
-                id = insert(INSERT_FILM_QUERY,
-                        film.getName(),
-                        film.getDescription(),
-                        Timestamp.from(film.getReleaseDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
-                        film.getDuration(),
-                        genre.getId(),
-                        film.getMpa().getId());
-            }
-            film.setId(id);
-            return film;
+        Integer mpaId = null;
+
+        if (film.getMpa() != null) {
+            mpaId = film.getMpa().getId();
         }
+
+        int id = insert(INSERT_FILM_QUERY,
+                film.getName(),
+                film.getDescription(),
+                Timestamp.from(film.getReleaseDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                film.getDuration(),
+                mpaId);
+        film.setId(id);
+
+        return film;
     }
 
-    public boolean updateFilm(Film film) {
-        Film oldFilm = findById(film.getId());
-        deleteFilm(film.getId());
+    public Film updateFilm(Film film, Film oldFilm) {
+        //deleteFilm(film.getId());
+        Integer mpaId = null;
 
-        Set<Genre> genres = film.getGenres();
-        int id = film.getId();
-
-        if (genres == null) {
-            for (Genre genre : oldFilm.getGenres()) {
-                id = insert(INSERT_FILM_QUERY,
-                        film.getName().isBlank() ? oldFilm.getName() : film.getName(),
-                        film.getDescription().isBlank() ? oldFilm.getDescription() : film.getDescription(),
-                        Timestamp.from(film.getReleaseDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
-                        film.getDuration(),
-                        genre.getId(),
-                        film.getMpa() == null ? oldFilm.getMpa().getId() : film.getMpa().getId());
-            }
-
-            return true;
-        } else if (oldFilm.getGenres() == null){
-            id = insert(INSERT_FILM_QUERY,
-                    film.getName().isBlank() ? oldFilm.getName() : film.getName(),
-                    film.getDescription().isBlank() ? oldFilm.getDescription() : film.getDescription(),
-                    Timestamp.from(film.getReleaseDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
-                    film.getDuration(),
-                    null,
-                    film.getMpa() == null ? oldFilm.getMpa().getId() : film.getMpa().getId());
-
-            return true;
-        } else {
-            for (Genre genre : film.getGenres()) {
-                id = insert(INSERT_FILM_QUERY,
-                        film.getName().isBlank() ? oldFilm.getName() : film.getName(),
-                        film.getDescription().isBlank() ? oldFilm.getDescription() : film.getDescription(),
-                        Timestamp.from(film.getReleaseDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
-                        film.getDuration(),
-                        genre.getId(),
-                        film.getMpa() == null ? oldFilm.getMpa().getId() : film.getMpa().getId());
-            }
-
-            return true;
+        if (oldFilm.getMpa() != null) {
+            mpaId = oldFilm.getMpa().getId();
         }
+
+        film.setName(film.getName().isBlank() ? oldFilm.getName() : film.getName());
+        film.setDescription(film.getDescription().isBlank() ? oldFilm.getDescription() : film.getDescription());
+        film.setMpa(film.getMpa() == null ? oldFilm.getMpa() : film.getMpa());
+
+        update(UPDATE_FILM_QUERY,
+                film.getName(),
+                film.getDescription(),
+                Timestamp.from(film.getReleaseDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                film.getDuration(),
+                film.getMpa() == null ? mpaId : film.getMpa().getId());
+
+        return film;
     }
 
     public boolean deleteFilm(int filmId) {
