@@ -30,6 +30,7 @@ public class FilmService {
     private final FilmsLikesStorage likesStorage;
 
     public Film getFilm(int id) {
+        log.info("Добавление фильма с id {}", id);
         Film film = filmStorage.findById(id);
         film.setGenres(new ArrayList<>());
         for (FilmsGenres genre : filmsGenresStorage.getGenreByFilm(id)) {
@@ -40,6 +41,7 @@ public class FilmService {
     }
 
     public List<Film> getFilms() {
+        log.info("Получение фильмов");
         List<Film> filmList = filmStorage.getFilms();
         filmList.forEach(film -> {
             List<FilmsGenres> filmsGenres = filmsGenresStorage.getGenreByFilm(film.getId());
@@ -55,6 +57,7 @@ public class FilmService {
     }
 
     public Film postFilm(Film film) {
+        log.info("Добавление фильма с названием {}", film.getName());
         validateData(film);
 
         List<Genre> filmsGenres = film.getGenres();
@@ -80,6 +83,7 @@ public class FilmService {
     }
 
     public Film updateFilm(Film film) {
+        log.info("Обновление фильма с названием {}", film.getName());
         validateData(film);
         
         Film oldFilm = filmStorage.findById(film.getId());
@@ -132,17 +136,18 @@ public class FilmService {
 
     }
 
-    public int addLike(int filmId, int userId, FilmsLikesStorage likesStorage) {
+    public int addLike(int filmId, int userId) {
         log.info("Добавление лайка фильму(id: {}) от пользователя(id: {})", filmId, userId);
         return likesStorage.addLike(filmId, userId);
     }
 
-    public boolean deleteLike(int filmId, int userId, FilmsLikesStorage likeStorage) {
+    public boolean deleteLike(int filmId, int userId) {
         log.info("Удаление лайка пользователя(id: {}) у фильма(id: {}) ", userId, filmId);
-        return likeStorage.deleteLike(filmId, userId);
+        return likesStorage.deleteLike(filmId, userId);
     }
 
     public List<Film> getPopularFilms(int count) {
+        log.info("Получение топ {} популярных фильмов", count);
         Comparator<Film> comparator = new Comparator<Film>() {
             @Override
             public int compare(Film o1, Film o2) {
@@ -167,12 +172,13 @@ public class FilmService {
         }
     }
 
-    public Map<String, List<String>> getLikes(FilmsLikesStorage filmsLikesStorage) {
+    public Map<String, List<String>> getLikes() {
+        log.info("Получение всех лайков");
         Map<String, List<String>> filmsLikes = new HashMap<>();
         List<String> likesList = null;
         String filmName = "";
 
-        for(FilmsLikes like : filmsLikesStorage.getLikes()) {
+        for(FilmsLikes like : likesStorage.getLikes()) {
             if (!filmName.equals(like.getFilm().getName())) {
                 likesList = new ArrayList<>();
                 filmName = like.getFilm().getName();
@@ -185,11 +191,12 @@ public class FilmService {
         return filmsLikes;
     }
 
-    public Map<String, List<String>> getLikesByFilm(int filmId, FilmsLikesStorage filmsLikesStorage) {
+    public Map<String, List<String>> getLikesByFilm(int filmId) {
+        log.info("Получение лайков фильма с id {}", filmId);
         Map<String, List<String>> filmsLikes = new HashMap<>();
         List<String> likesList = new ArrayList<>();
 
-        for(FilmsLikes like : filmsLikesStorage.getLikesByFilm(filmId)) {
+        for(FilmsLikes like : likesStorage.getLikesByFilm(filmId)) {
             likesList.add(like.getUser().getName());
             filmsLikes.put(like.getFilm().getName(), likesList);
         }
@@ -197,16 +204,22 @@ public class FilmService {
         return filmsLikes;
     }
 
-    public List<Genre> getGenreByFilm(int filmId, FilmStorage filmStorage) {
+    public List<Genre> getGenreByFilm(int filmId) {
+        log.info("Получение жанров фильма с id {}", filmId);
         return filmStorage.findById(filmId).getGenres();
     }
 
-    public Mpa getMpaByFilm(int filmId, FilmStorage filmStorage) {
+    public Mpa getMpaByFilm(int filmId) {
+        log.info("Получение рейтинга фильма с id {}", filmId);
         return filmStorage.findById(filmId).getMpa();
     }
 
+    public boolean deleteFilm(int filmId) {
+        log.info("Удаление фильма с id {}", filmId);
+        return filmStorage.deleteFilm(filmId);
+    }
 
-    public void validateData(Film film) {
+    private void validateData(Film film) {
         if (film.getReleaseDate().isBefore(LocalDate.of(1895, 12, 28))) {
             throw new ConditionNotMetException("Дата не может быть раньше 12.28.1985");
         }
@@ -223,5 +236,4 @@ public class FilmService {
             }
         }
     }
-
 }
