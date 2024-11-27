@@ -10,7 +10,7 @@ public interface FilmStorage {
 
     Film postFilm(Film film);
 
-    boolean updateFilm(Film film);
+    Film updateFilm(Film film, Film oldFilm);
 
     boolean deleteFilm(int filmId);
 
