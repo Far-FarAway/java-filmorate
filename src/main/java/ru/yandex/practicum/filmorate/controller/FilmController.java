@@ -1,6 +1,7 @@
 package ru.yandex.practicum.filmorate.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.groups.Default;
 import lombok.AllArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,7 @@ import ru.yandex.practicum.filmorate.storage.mpa.MpaStorage;
 @RestController
 @RequestMapping("/films")
 @AllArgsConstructor
+@Validated
 public class FilmController {
     FilmStorage filmStorage;
     FilmsLikesStorage likesStorage;
@@ -53,8 +55,7 @@ public class FilmController {
     }
 
     @PostMapping
-    @Validated({OnCreate.class})
-    public Film postFilm(@Valid @RequestBody Film film) {
+    public Film postFilm(@Validated({OnCreate.class, Default.class}) @RequestBody Film film) {
         return filmService.postFilm(film);
     }
 
@@ -64,7 +65,7 @@ public class FilmController {
     }
 
     @PutMapping
-    public Film updateFilm(@Valid @RequestBody Film film) {
+    public Film updateFilm(@RequestBody Film film) {
         return filmService.updateFilm(film);
     }
 
