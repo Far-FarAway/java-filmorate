@@ -22,24 +22,22 @@ public class FilmService {
     private final FilmsGenresStorage filmsGenresStorage;
     private final GenreStorage genreStorage;
 
+
+
     public Film postFilm(Film film) {
-        Set<Genre> filmsGenres = film.getGenres();
+        List<Genre> filmsGenres = film.getGenres();
         Film resultFilm = null;
 
         if (filmsGenres == null) {
             resultFilm = filmStorage.postFilm(film);
         } else {
-            Set<Genre> allGenres = new HashSet<>();
+            List<Genre> allGenres = new ArrayList<>();
             resultFilm = filmStorage.postFilm(film);
 
             for(Genre genre : filmsGenres) {
                 filmsGenresStorage.addGenre(resultFilm.getId(), genre.getId()/*, filmsGenres.size()*/);
                 allGenres.add(genreStorage.getGenre(genre.getId()));
             }
-
-
-            Collections.sort(allGenres);
-
 
             resultFilm.setGenres(allGenres);
         }
@@ -49,8 +47,8 @@ public class FilmService {
 
     public Film updateFilm(Film film) {
         Film oldFilm = filmStorage.findById(film.getId());
-        Set<Genre> oldGenres = oldFilm.getGenres();
-        Set<Genre> genres = film.getGenres();
+        List<Genre> oldGenres = oldFilm.getGenres();
+        List<Genre> genres = film.getGenres();
         Film resultFilm = null;
         int id = film.getId();
 
@@ -145,7 +143,7 @@ public class FilmService {
         return filmsLikes;
     }
 
-    public Set<Genre> getGenreByFilm(int filmId, FilmStorage filmStorage) {
+    public List<Genre> getGenreByFilm(int filmId, FilmStorage filmStorage) {
         return filmStorage.findById(filmId).getGenres();
     }
 

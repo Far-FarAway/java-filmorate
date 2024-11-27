@@ -23,6 +23,6 @@ public class Film {
     private LocalDate releaseDate;
     @PositiveOrZero
     int duration;
-    private Set<Genre> genres;
+    private List<Genre> genres;
     private Mpa mpa;
 }

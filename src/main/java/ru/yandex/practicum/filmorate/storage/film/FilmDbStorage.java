@@ -37,6 +37,13 @@ public class FilmDbStorage extends BaseRepository<Film> implements FilmStorage {
 
     public List<Film> getFilms() {
         List<Film> filmList = findMany(FIND_FILMS_QUERY);
+
+        filmList.forEach(film -> {
+
+        });
+
+
+
         List<Film> newFilmList = new ArrayList<>();
 
         if (filmList.size() > 1) {

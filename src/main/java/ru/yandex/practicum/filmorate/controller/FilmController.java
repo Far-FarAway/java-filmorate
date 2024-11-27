@@ -29,7 +29,7 @@ public class FilmController {
 
     @GetMapping
     public List<Film> getFilms() {
-        return filmStorage.getFilms();
+        return filmService.getFilms();
     }
 
     @GetMapping("/{id}")
@@ -79,7 +79,7 @@ public class FilmController {
     }
 
     @GetMapping("/genres/{id}")
-    public Set<Genre> getGenreByFilm(@PathVariable int id) {
+    public List<Genre> getGenreByFilm(@PathVariable int id) {
         return filmService.getGenreByFilm(id, filmStorage);
     }
 

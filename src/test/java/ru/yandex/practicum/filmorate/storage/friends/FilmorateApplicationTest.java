@@ -58,17 +58,17 @@ class FilmoRateApplicationTests {
         film1 = new Film();
         film1.setName("testFilm1");
         film1.setDescription("1Test1");
-        film1.setGenre("Fantasy");
+        film1.setGenres("Fantasy");
         film1.setReleaseDate(Instant.now());
-        film1.setRating("G");
+        film1.setMpa("G");
         film1.setDuration(230);
 
         film2 = new Film();
         film2.setName("testFilm2");
         film2.setDescription("2TestTest2");
-        film2.setGenre("Comedy");
+        film2.setGenres("Comedy");
         film2.setReleaseDate(Instant.now());
-        film2.setRating("PG");
+        film2.setMpa("PG");
         film1.setDuration(20);
 
         jdbc.execute("ALTER TABLE users ALTER COLUMN user_id RESTART WITH 1");
@@ -187,9 +187,9 @@ class FilmoRateApplicationTests {
         updatedFilm.setId(2);
         updatedFilm.setName("updatedData");
         updatedFilm.setDescription("updatedAtad");
-        updatedFilm.setGenre("Romantic");
+        updatedFilm.setGenres("Romantic");
         updatedFilm.setReleaseDate(Instant.now());
-        updatedFilm.setRating("G");
+        updatedFilm.setMpa("G");
         updatedFilm.setDuration(1220);
 
         filmStorage.postFilm(film1);
