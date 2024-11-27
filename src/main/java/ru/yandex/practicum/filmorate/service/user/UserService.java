@@ -26,15 +26,15 @@ public class UserService {
 
     public boolean addFriend(int userId, int friendId) {
         log.info("Добавление нового друга");
-        if (checkUser(userId) && checkUser(friendId)) {
-            return friendStorage.addFriend(userId, friendId) == -3;
-        }
-        throw new InternalServerException("Не удалось добавить друга");
+        checkUser(userId);
+        checkUser(friendId);
+        return friendStorage.addFriend(userId, friendId) == -3;
     }
 
     public List<User> getFriends(int userId) {
         log.info("Получение списка друзей пользователя с id {}", userId);
         List<User> list = new ArrayList<>();
+        checkUser(userId);
 
         for(FriendList friend : friendStorage.getFriends(userId)) {
             list.add(friend.getFriend());
@@ -45,6 +45,8 @@ public class UserService {
 
     public List<User> getCommonFriends(int userId, int friendId) {
         log.info("Получение списка общих друзей пользователя(id: {}) с другом(id: {})", userId, friendId);
+        checkUser(userId);
+        checkUser(friendId);
         List<User> userFriendList = getFriends(userId);
         List<User> friendListsOfFriend = getFriends(friendId);
 
@@ -61,20 +63,21 @@ public class UserService {
 
     public boolean deleteFriend(int userId, int friendId) {
         log.info("Удаление из списка друзей пользователя(id: {}) друга с id {}", userId, friendId);
+        checkUser(userId);
+        checkUser(friendId);
         return friendStorage.deleteFriend(userId, friendId);
     }
 
     public boolean deleteUser(int userId) {
         friendStorage.deleteUser(userId);
+        checkUser(userId);
         return userStorage.deleteUser(userId);
     }
 
-    public boolean checkUser(int userId) {
+    public void checkUser(int userId) {
         User user = new User();
         user.setId(userId);
-        if(userStorage.getUsers().contains(user)) {
-            return true;
-        } else {
+        if(!userStorage.getUsers().contains(user)) {
             throw new NotFoundException("Пользователь с id " + userId + " не найден");
         }
     }
