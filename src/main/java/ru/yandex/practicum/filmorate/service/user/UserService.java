@@ -21,6 +21,8 @@ public class UserService {
     private final FriendListStorage friendStorage;
 
     public User getUser(int userId) {
+        log.info("Получение пользователя с id {}", userId);
+        checkUser(userId);
         return userStorage.findById(userId);
     }
 
@@ -69,12 +71,13 @@ public class UserService {
     }
 
     public boolean deleteUser(int userId) {
+        log.info("Удаление пользователя с id {}", userId);
         friendStorage.deleteUser(userId);
         checkUser(userId);
         return userStorage.deleteUser(userId);
     }
 
-    public void checkUser(int userId) {
+    private void checkUser(int userId) {
         User user = new User();
         user.setId(userId);
         if(!userStorage.getUsers().contains(user)) {
