@@ -21,7 +21,7 @@ public class FriendListDbStorage extends BaseRepository<FriendList> implements F
     }
 
     public int addFriend(int userId, int newFriendId) {
-        return insert(ADD_FRIEND_QUERY, newFriendId, userId);
+        return insert(ADD_FRIEND_QUERY, userId, newFriendId);
     }
 
     public boolean deleteFriend(int userId, int friendId) {
