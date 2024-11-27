@@ -17,6 +17,8 @@ public class Film {
     @NotBlank(groups = {OnCreate.class})
     private String name;
     @Size(max = 200)
+    @NotNull(groups = {OnCreate.class})
+    @NotBlank(groups = {OnCreate.class})
     private String description;
     @NotNull(groups = {OnCreate.class})
     @PastOrPresent
