@@ -1,9 +1,12 @@
 package ru.yandex.practicum.filmorate.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.groups.Default;
 import lombok.AllArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import ru.yandex.practicum.filmorate.annotation.OnCreate;
 import ru.yandex.practicum.filmorate.exception.InternalServerException;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.user.UserService;
@@ -17,6 +20,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/users")
 @AllArgsConstructor
+@Validated
 public class UserController {
     UserStorage userStorage;
     FriendListStorage friendListStorage;
@@ -38,7 +42,7 @@ public class UserController {
     }
 
     @PostMapping
-    public User postUser(@Valid @RequestBody User user) {
+    public User postUser(@Validated({OnCreate.class, Default.class}) @RequestBody User user) {
         return userStorage.postUser(user);
     }
 
