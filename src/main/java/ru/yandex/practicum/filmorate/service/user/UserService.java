@@ -28,8 +28,15 @@ public class UserService {
         log.info("Добавление нового друга");
         User user = new User();
         user.setId(userId);
-        if (userStorage.getUsers().contains(user)) {
-            return friendStorage.addFriend(userId, friendId) == -3;
+        User friend = new User();
+        friend.setId(friendId);
+        List<User> usersList = userStorage.getUsers();
+        if (usersList.contains(user)) {
+            if (usersList.contains(friend)) {
+                return friendStorage.addFriend(userId, friendId) == -3;
+            } else {
+                throw new NotFoundException("Друг с id " + userId + " не найден");
+            }
         } else {
             throw new NotFoundException("Пользователь с id " + userId + " не найден");
         }
