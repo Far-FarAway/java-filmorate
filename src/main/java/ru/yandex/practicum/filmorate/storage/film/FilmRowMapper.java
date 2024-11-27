@@ -30,14 +30,6 @@ public class FilmRowMapper implements RowMapper<Film> {
         film.setReleaseDate(results.getTimestamp("release_date").toLocalDateTime().toLocalDate());
         film.setDuration(results.getInt("duration"));
 
-        List<Genre> genresList = new ArrayList<>();
-        if (results.getInt("genre_id") != 0) {
-            genresList.add(genreStorage.getGenre(results.getInt("genre_id")));
-            film.setGenres(genresList);
-        } else {
-            film.setGenres(genresList);
-        }
-
         if (results.getInt("mpa_id") != 0) {
             film.setMpa(mpaStorage.getMpa(results.getInt("mpa_id")));
         }
