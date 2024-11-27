@@ -59,6 +59,10 @@ public class BaseRepository<T> {
         }, keyHolder);
         Integer id = keyHolder.getKeyAs(Integer.class);
 
+        if (query.contains("films_genres") || query.contains("films_likes")) {
+            return -3;
+        }
+
         if (id != null) {
             return id;
         } else {
