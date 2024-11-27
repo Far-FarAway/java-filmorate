@@ -26,7 +26,13 @@ public class UserService {
 
     public boolean addFriend(int userId, int friendId) {
         log.info("Добавление нового друга");
-        return friendStorage.addFriend(userId, friendId) == -3;
+        User user = new User();
+        user.setId(userId);
+        if (userStorage.getUsers().contains(user)) {
+            return friendStorage.addFriend(userId, friendId) == -3;
+        } else {
+            throw new NotFoundException("Пользователь с id " + userId + " не найден");
+        }
     }
 
     public List<User> getFriends(int userId) {
