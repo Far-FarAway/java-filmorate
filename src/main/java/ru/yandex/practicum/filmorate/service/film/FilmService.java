@@ -12,6 +12,7 @@ import ru.yandex.practicum.filmorate.storage.filmslikes.FilmsLikesStorage;
 import ru.yandex.practicum.filmorate.storage.genre.GenreStorage;
 import ru.yandex.practicum.filmorate.storage.mpa.MpaStorage;
 
+import java.sql.Array;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -64,6 +65,11 @@ public class FilmService {
         validateData(film);
         
         Film oldFilm = filmStorage.findById(film.getId());
+        oldFilm.setGenres(new ArrayList<>());
+        for (FilmsGenres genre : filmsGenresStorage.getGenreByFilm(oldFilm.getId())) {
+            oldFilm.getGenres().add(genreStorage.getGenre(genre.getGenreId()));
+        }
+
         List<Genre> oldGenres = oldFilm.getGenres();
         List<Genre> genres = film.getGenres();
         Film resultFilm = null;
@@ -75,18 +81,17 @@ public class FilmService {
             resultFilm.setGenres(oldGenres);
         } else if (oldGenres == null) {
             resultFilm = filmStorage.updateFilm(film, oldFilm);
-            List<FilmsGenres> resultGenres = filmsGenresStorage.getGenreByFilm(resultFilm.getId());
+            List<Genre> resultGenres = new ArrayList<>();
 
-            for (FilmsGenres genre : resultGenres) {
+            for (FilmsGenres genre : filmsGenresStorage.getGenreByFilm(resultFilm.getId())) {
                 filmsGenresStorage.addGenre(genre.getFilmId(), genre.getGenreId());
+                resultGenres.add(genreStorage.getGenre(genre.getGenreId()));
             }
-            resultFilm.setGenres(genres);
+            resultFilm.setGenres(resultGenres);
         } else {
             resultFilm = filmStorage.updateFilm(film, oldFilm);
-            List<FilmsGenres> resultGenres = filmsGenresStorage.getGenreByFilm(resultFilm.getId());
+            List<Genre> resultGenres = new ArrayList<>();
 
-
-//            if (genres.size() > oldGenres.size()) {
             genres.forEach(genre -> {
                 for (Genre oldGenre : oldGenres) {
                     genre.setName(!genre.getName().equals(oldGenre.getName()) ?
@@ -94,10 +99,10 @@ public class FilmService {
                     filmsGenresStorage.deleteGenreByFilm(oldFilm.getId(), oldGenre.getId());
                 }
                 filmsGenresStorage.addGenre(film.getId(), genre.getId());
-
+                resultGenres.add(genreStorage.getGenre(genre.getId()));
             });
-//            }
-            resultFilm.setGenres(genres);
+
+            resultFilm.setGenres(resultGenres);
         }
 
         return resultFilm;
