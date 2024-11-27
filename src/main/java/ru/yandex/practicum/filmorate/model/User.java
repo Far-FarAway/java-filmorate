@@ -1,6 +1,7 @@
 package ru.yandex.practicum.filmorate.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import lombok.EqualsAndHashCode;
 import ru.yandex.practicum.filmorate.annotation.OnCreate;
 
 import jakarta.validation.constraints.*;
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 
 
 @Data
+@EqualsAndHashCode(of = {"id"})
 public class User {
     @PositiveOrZero
     private int id;
