@@ -55,7 +55,7 @@ public class FilmController {
     @PostMapping
     @Validated({OnCreate.class})
     public Film postFilm(@Valid @RequestBody Film film) {
-        return filmStorage.postFilm(film);
+        return filmService.postFilm(film);
     }
 
     @PutMapping("/{filmId}/like/{userId}")
