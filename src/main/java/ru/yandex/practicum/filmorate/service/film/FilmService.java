@@ -67,14 +67,13 @@ public class FilmService {
         List<Genre> oldGenres = oldFilm.getGenres();
         List<Genre> genres = film.getGenres();
         Film resultFilm = null;
-        int id = film.getId();
 
         if (genres == null && oldGenres == null) {
             resultFilm = filmStorage.updateFilm(film, oldFilm);
-        } else if (genres == null && oldGenres != null){
+        } else if (genres == null){
             resultFilm = filmStorage.updateFilm(film, oldFilm);
             resultFilm.setGenres(oldGenres);
-        } else if (genres != null && oldGenres == null) {
+        } else if (oldGenres == null) {
             resultFilm = filmStorage.updateFilm(film, oldFilm);
             List<FilmsGenres> resultGenres = filmsGenresStorage.getGenreByFilm(resultFilm.getId());
 
@@ -178,9 +177,11 @@ public class FilmService {
             throw new ConditionNotMetException("Рейтинга с  таким id " + film.getMpa().getId() + " не существует ");
         }
 
-        for(Genre genre : film.getGenres()) {
-            if (!genreStorage.getGenres().contains(genre)) {
-                throw new ConditionNotMetException("Жанра с таким id " + genre.getId() + " не существует");
+        if (film.getGenres() != null) {
+            for (Genre genre : film.getGenres()) {
+                if (!genreStorage.getGenres().contains(genre)) {
+                    throw new ConditionNotMetException("Жанра с таким id " + genre.getId() + " не существует");
+                }
             }
         }
     }
