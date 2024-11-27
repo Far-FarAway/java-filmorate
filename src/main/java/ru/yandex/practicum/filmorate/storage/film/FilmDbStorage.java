@@ -36,34 +36,7 @@ public class FilmDbStorage extends BaseRepository<Film> implements FilmStorage {
     }
 
     public List<Film> getFilms() {
-        List<Film> filmList = findMany(FIND_FILMS_QUERY);
-
-        filmList.forEach(film -> {
-
-        });
-
-
-
-        List<Film> newFilmList = new ArrayList<>();
-
-        if (filmList.size() > 1) {
-            Film groupingFilm = filmList.getFirst();
-            int id = groupingFilm.getId();
-
-            for(Film film : filmList) {
-                if (id != film.getId()) {
-                    newFilmList.add(groupingFilm);
-                    groupingFilm = film;
-                    id = film.getId();
-                }
-
-                groupingFilm.getGenres().addAll(film.getGenres());
-            }
-
-            return newFilmList;
-        }
-
-        return filmList;
+        return findMany(FIND_FILMS_QUERY);
     }
 
     public Film postFilm(Film film) {
@@ -112,7 +85,8 @@ public class FilmDbStorage extends BaseRepository<Film> implements FilmStorage {
     }
 
     public Film findById(int filmId) {
-        List<Film> filmList = findMany(FIND_FILM_QUERY, filmId);
+        return findOne(FIND_FILM_QUERY, filmId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
+        /*List<Film> filmList = findMany(FIND_FILM_QUERY, filmId);
         if (filmList.isEmpty()) {
             throw new NotFoundException("Фильм не найден");
         }
@@ -123,6 +97,6 @@ public class FilmDbStorage extends BaseRepository<Film> implements FilmStorage {
             return resultFilm;
         } else {
             return filmList.getFirst();
-        }
+        }*/
     }
 }
