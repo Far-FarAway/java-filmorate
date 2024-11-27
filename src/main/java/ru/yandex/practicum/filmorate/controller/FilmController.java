@@ -25,8 +25,6 @@ import ru.yandex.practicum.filmorate.storage.mpa.MpaStorage;
 @AllArgsConstructor
 @Validated
 public class FilmController {
-    FilmStorage filmStorage;
-    FilmsLikesStorage likesStorage;
     FilmService filmService;
 
     @GetMapping
@@ -41,12 +39,12 @@ public class FilmController {
 
     @GetMapping("/likes")
     public Map<String, List<String>> getLikes() {
-        return filmService.getLikes(likesStorage);
+        return filmService.getLikes();
     }
 
     @GetMapping("/likes/{filmId}")
     public Map<String, List<String>> getLikes(@PathVariable int filmId) {
-        return filmService.getLikesByFilm(filmId, likesStorage);
+        return filmService.getLikesByFilm(filmId);
     }
 
     @GetMapping("/popular")
@@ -61,7 +59,7 @@ public class FilmController {
 
     @PutMapping("/{filmId}/like/{userId}")
     public int addLike(@PathVariable int filmId, @PathVariable int userId) {
-        return filmService.addLike(filmId, userId, likesStorage);
+        return filmService.addLike(filmId, userId);
     }
 
     @PutMapping
@@ -71,21 +69,21 @@ public class FilmController {
 
     @DeleteMapping("/{filmId}")
     public boolean deleteFilm(@PathVariable int filmId) {
-        return filmStorage.deleteFilm(filmId);
+        return filmService.deleteFilm(filmId);
     }
 
     @DeleteMapping("/{filmId}/like/{userId}")
     public boolean deleteLike(@PathVariable int filmId, @PathVariable int userId) {
-        return filmService.deleteLike(filmId, userId, likesStorage);
+        return filmService.deleteLike(filmId, userId);
     }
 
     @GetMapping("/genres/{id}")
     public List<Genre> getGenreByFilm(@PathVariable int id) {
-        return filmService.getGenreByFilm(id, filmStorage);
+        return filmService.getGenreByFilm(id);
     }
 
     @GetMapping("/mpa/{id}")
     public Mpa getMpaByFilm(@PathVariable int id) {
-        return filmService.getMpaByFilm(id, filmStorage);
+        return filmService.getMpaByFilm(id);
     }
 }
