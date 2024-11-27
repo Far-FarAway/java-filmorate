@@ -18,6 +18,8 @@ public class FilmsGenresDbStorage extends BaseRepository<FilmsGenres> implements
             "WHERE film_id = ? AND genre_id = ?";
     private final static String DELETE_GENRES_BY_FILM_QUERY =
             "DELETE FROM films_genres WHERE film_id = ? AND genre_id = ?";
+    private final static String DELETE_FILM_QUERY =
+            "DELETE FROM films_genres WHERE film_id = ?";
 
     @Autowired
     public FilmsGenresDbStorage(JdbcTemplate jdbc, @Qualifier("filmsGenresRowMapper") RowMapper<FilmsGenres> mapper) {
@@ -43,5 +45,9 @@ public class FilmsGenresDbStorage extends BaseRepository<FilmsGenres> implements
         filmsGenres.setGenreId(newGenreId);
 
         return filmsGenres;
+    }
+
+    public boolean deleteFilm(int filmId) {
+        return delete(DELETE_FILM_QUERY, filmId);
     }
 }

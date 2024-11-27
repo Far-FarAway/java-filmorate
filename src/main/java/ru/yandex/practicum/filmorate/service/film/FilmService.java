@@ -211,6 +211,7 @@ public class FilmService {
 
     public boolean deleteFilm(int filmId) {
         log.info("Удаление фильма с id {}", filmId);
+        filmsGenresStorage.deleteFilm(filmId);
         return filmStorage.deleteFilm(filmId);
     }
 
