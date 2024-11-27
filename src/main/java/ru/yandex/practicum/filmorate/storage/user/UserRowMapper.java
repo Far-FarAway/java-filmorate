@@ -15,12 +15,17 @@ public class UserRowMapper implements RowMapper<User> {
     @Override
     public User mapRow(ResultSet results, int roeNum) throws SQLException {
         User user = new User();
+        System.out.println("Mapping user: " + results.getString("name"));
         user.setId(results.getInt("user_id"));
         user.setName(results.getString("name"));
         user.setLogin(results.getString("login"));
         user.setEmail(results.getString("email"));
         user.setBirthday(results.getTimestamp("birthday").toLocalDateTime().toLocalDate());
-        user.setFriendStatus(FriendStatus.valueOf(results.getString("friend_status")));
+
+        String status = results.getString("friend_status");
+        if (status != null) {
+            user.setFriendStatus(FriendStatus.valueOf(status));
+        }
 
         return user;
     }
