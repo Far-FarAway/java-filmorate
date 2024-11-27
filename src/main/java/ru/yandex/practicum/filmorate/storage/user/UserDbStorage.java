@@ -13,6 +13,7 @@ import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.BaseRepository;
 
 import java.sql.Timestamp;
+import java.time.ZoneId;
 import java.util.Collection;
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class UserDbStorage extends BaseRepository<User> implements UserStorage{
                 user.getName(),
                 user.getLogin(),
                 user.getEmail(),
-                Timestamp.from(user.getBirthday()),
+                Timestamp.from(user.getBirthday().atStartOfDay(ZoneId.systemDefault()).toInstant()),
                 user.getFriendStatus() == null ? null : user.getFriendStatus().toString());
          user.setId(id);
          return user;
@@ -54,7 +55,7 @@ public class UserDbStorage extends BaseRepository<User> implements UserStorage{
                 user.getName().isBlank() ? oldUser.getName() : user.getName(),
                 user.getLogin().isBlank() ? oldUser.getLogin() : user.getLogin(),
                 user.getEmail().isBlank() ? oldUser.getEmail() : user.getEmail(),
-                user.getBirthday(),
+                Timestamp.from(user.getBirthday().atStartOfDay(ZoneId.systemDefault()).toInstant()),
                 user.getFriendStatus() == null ? null : user.getFriendStatus().toString(),
                 user.getId());
     }

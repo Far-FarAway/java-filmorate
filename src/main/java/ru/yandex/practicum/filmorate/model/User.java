@@ -1,13 +1,13 @@
 package ru.yandex.practicum.filmorate.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import ru.yandex.practicum.filmorate.LocalDateToInstantDeserializer;
 import ru.yandex.practicum.filmorate.annotation.OnCreate;
 
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.time.Instant;
+import java.time.LocalDate;
 
 
 @Data
@@ -23,7 +23,6 @@ public class User {
     private String login;
     private String name;
     @PastOrPresent
-    @JsonDeserialize(using = LocalDateToInstantDeserializer.class)
-    private Instant birthday;
+    private LocalDate birthday;
     private FriendStatus friendStatus;
 }
