@@ -38,7 +38,7 @@ public class UserService {
         List<User> list = new ArrayList<>();
         checkUser(userId);
 
-        for(FriendList friend : friendStorage.getFriends(userId)) {
+        for (FriendList friend : friendStorage.getFriends(userId)) {
             list.add(friend.getFriend());
         }
 
@@ -54,7 +54,7 @@ public class UserService {
 
         List<User> commonFriendList = new ArrayList<>();
 
-        for(User friend : userFriendList) {
+        for (User friend : userFriendList) {
             if (friendListsOfFriend.contains(friend)) {
                 commonFriendList.add(friend);
             }
@@ -80,7 +80,7 @@ public class UserService {
     private void checkUser(int userId) {
         User user = new User();
         user.setId(userId);
-        if(!userStorage.getUsers().contains(user)) {
+        if (!userStorage.getUsers().contains(user)) {
             throw new NotFoundException("Пользователь с id " + userId + " не найден");
         }
     }

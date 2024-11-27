@@ -20,7 +20,7 @@ public class FilmsLikesDbStorage extends BaseRepository<FilmsLikes> implements F
 
     @Autowired
     public FilmsLikesDbStorage(JdbcTemplate jdbc, @Qualifier("filmsLikesRowMapper") RowMapper<FilmsLikes> mapper) {
-        super (jdbc, mapper);
+        super(jdbc, mapper);
     }
 
     public int addLike(int filmId, int userId) {

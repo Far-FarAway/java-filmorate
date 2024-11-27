@@ -69,7 +69,7 @@ public class FilmService {
             List<Genre> allGenres = new ArrayList<>();
             resultFilm = filmStorage.postFilm(film);
 
-            for(Genre genre : filmsGenres) {
+            for (Genre genre : filmsGenres) {
                 if (!allGenres.contains(genre)) {
                     filmsGenresStorage.addGenre(resultFilm.getId(), genre.getId());
                     allGenres.add(genreStorage.getGenre(genre.getId()));
@@ -85,7 +85,7 @@ public class FilmService {
     public Film updateFilm(Film film) {
         log.info("Обновление фильма с названием {}", film.getName());
         validateData(film);
-        
+
         Film oldFilm = filmStorage.findById(film.getId());
         oldFilm.setGenres(new ArrayList<>());
         for (FilmsGenres genre : filmsGenresStorage.getGenreByFilm(oldFilm.getId())) {
@@ -98,7 +98,7 @@ public class FilmService {
 
         if (genres == null && oldGenres == null) {
             resultFilm = filmStorage.updateFilm(film, oldFilm);
-        } else if (genres == null){
+        } else if (genres == null) {
             resultFilm = filmStorage.updateFilm(film, oldFilm);
             resultFilm.setGenres(oldGenres);
         } else if (oldGenres == null) {
@@ -178,7 +178,7 @@ public class FilmService {
         List<String> likesList = null;
         String filmName = "";
 
-        for(FilmsLikes like : likesStorage.getLikes()) {
+        for (FilmsLikes like : likesStorage.getLikes()) {
             if (!filmName.equals(like.getFilm().getName())) {
                 likesList = new ArrayList<>();
                 filmName = like.getFilm().getName();
@@ -196,7 +196,7 @@ public class FilmService {
         Map<String, List<String>> filmsLikes = new HashMap<>();
         List<String> likesList = new ArrayList<>();
 
-        for(FilmsLikes like : likesStorage.getLikesByFilm(filmId)) {
+        for (FilmsLikes like : likesStorage.getLikesByFilm(filmId)) {
             likesList.add(like.getUser().getName());
             filmsLikes.put(like.getFilm().getName(), likesList);
         }

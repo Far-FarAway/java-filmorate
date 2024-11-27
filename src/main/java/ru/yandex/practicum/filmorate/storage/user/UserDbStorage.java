@@ -18,7 +18,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Repository
-public class UserDbStorage extends BaseRepository<User> implements UserStorage{
+public class UserDbStorage extends BaseRepository<User> implements UserStorage {
     private final static String FIND_USER_QUERY = "SELECT * FROM users WHERE user_id = ?";
     private final static String FIND_USERS_QUERY = "SELECT * FROM users";
     private final static String DELETE_USER_QUERY = "DELETE FROM users WHERE user_id = ?";
@@ -38,14 +38,14 @@ public class UserDbStorage extends BaseRepository<User> implements UserStorage{
     }
 
     public User postUser(User user) {
-         int id = insert(INSERT_USER_QUERY,
+        int id = insert(INSERT_USER_QUERY,
                 user.getName(),
                 user.getLogin(),
                 user.getEmail(),
                 Timestamp.from(user.getBirthday().atStartOfDay(ZoneId.systemDefault()).toInstant()),
                 user.getFriendStatus() == null ? null : user.getFriendStatus().toString());
-         user.setId(id);
-         return user;
+        user.setId(id);
+        return user;
     }
 
     public User updateUser(User user) {
