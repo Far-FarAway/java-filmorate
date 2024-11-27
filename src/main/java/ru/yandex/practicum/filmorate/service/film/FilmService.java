@@ -44,7 +44,7 @@ public class FilmService {
             resultFilm = filmStorage.postFilm(film);
 
             for(Genre genre : filmsGenres) {
-                filmsGenresStorage.addGenre(resultFilm.getId(), genre.getId()/*, filmsGenres.size()*/);
+                filmsGenresStorage.addGenre(resultFilm.getId(), genre.getId());
                 allGenres.add(genreStorage.getGenre(genre.getId()));
             }
 
