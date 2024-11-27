@@ -1,0 +1,33 @@
+package ru.yandex.practicum.filmorate.storage.filmsgenres;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
+import ru.yandex.practicum.filmorate.model.FilmsGenres;
+import ru.yandex.practicum.filmorate.storage.BaseRepository;
+
+import java.util.List;
+
+@Repository
+public class FilmsGenresDbStorage extends BaseRepository<FilmsGenres> implements FilmsGenresStorage {
+    private final static String ADD_GENRE_TO_FILM_QUERY = "INSERT INTO films_genres(film_id, genre_id) VALUES (?, ?)";
+    private final static String FIND_GENRES_BY_FILM_QUERY = "SELECT * FROM films_genres WHERE film_id = ?";
+    private final static String DELETE_GENRES_BY_FILM_QUERY =
+            "DELETE FROM films_genres WHERE film_id = ? AND genre_id = ?";
+    @Autowired
+    public FilmsGenresDbStorage(JdbcTemplate jdbc, @Qualifier("filmsGenresRowMapper") RowMapper<FilmsGenres> mapper) {
+        super(jdbc, mapper);
+    }
+
+    public int addGenre(int filmId, int genreId) {
+        return insert(ADD_GENRE_TO_FILM_QUERY, filmId, genreId);
+    }
+    public List<FilmsGenres> getGenreByFilm(int filmId) {
+        return findMany(FIND_GENRES_BY_FILM_QUERY, filmId);
+    }
+    public boolean deleteGenreByFilm(int filmId, int genreId) {
+        return delete(DELETE_GENRES_BY_FILM_QUERY, filmId, genreId);
+    }
+}
