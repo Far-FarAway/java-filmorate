@@ -14,10 +14,10 @@ import java.util.List;
 
 @Repository
 public class GenreDbStorage extends BaseRepository<Genre> implements GenreStorage {
-    private final static String POST_GENRE_QUERY = "INSERT INTO genres(name) VALUES (?)";
-    private final static String FIND_GENRE_QUERY = "SELECT * FROM genres WHERE genre_id = ?";
-    private final static String FIND_GENRES_QUERY = "SELECT * FROM genres";
-    private final static String DELETE_GENRE_QUERY = "DELETE FROM genres WHERE genre_id = ?";
+    private static final String POST_GENRE_QUERY = "INSERT INTO genres(name) VALUES (?)";
+    private static final String FIND_GENRE_QUERY = "SELECT * FROM genres WHERE genre_id = ?";
+    private static final String FIND_GENRES_QUERY = "SELECT * FROM genres";
+    private static final String DELETE_GENRE_QUERY = "DELETE FROM genres WHERE genre_id = ?";
 
     public GenreDbStorage(JdbcTemplate jdbc, @Qualifier("genreRowMapper") RowMapper<Genre> mapper) {
         super(jdbc, mapper);

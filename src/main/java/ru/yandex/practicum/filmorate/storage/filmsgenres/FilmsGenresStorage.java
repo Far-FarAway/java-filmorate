@@ -12,5 +12,6 @@ public interface FilmsGenresStorage {
     boolean deleteGenreByFilm(int filmId, int genreId);
 
     FilmsGenres updateGenre(int filmId, int genreId, int newFilmId, int newGenreId);
+
     boolean deleteFilm(int filmId);
 }

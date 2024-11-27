@@ -11,10 +11,10 @@ import java.util.*;
 
 @Repository
 public class FriendListDbStorage extends BaseRepository<FriendList> implements FriendListStorage {
-    private final static String ADD_FRIEND_QUERY = "INSERT INTO friends(user_id, friend_id) VALUES (?, ?)";
-    private final static String DELETE_FRIEND_QUERY = "DELETE FROM friends WHERE user_id = ? AND friend_id = ?";
-    private final static String FIND_FRIENDS_QUERY = "SELECT * FROM friends WHERE user_id = ?";
-    private final static String DELETE_USER_QUERY = "DELETE FROM friends WHERE user_id = ?";
+    private static final String ADD_FRIEND_QUERY = "INSERT INTO friends(user_id, friend_id) VALUES (?, ?)";
+    private static final String DELETE_FRIEND_QUERY = "DELETE FROM friends WHERE user_id = ? AND friend_id = ?";
+    private static final String FIND_FRIENDS_QUERY = "SELECT * FROM friends WHERE user_id = ?";
+    private static final String DELETE_USER_QUERY = "DELETE FROM friends WHERE user_id = ?";
 
     public FriendListDbStorage(JdbcTemplate jdbc, @Qualifier("friendListRowMapper") RowMapper<FriendList> mapper) {
         super(jdbc, mapper);

@@ -13,10 +13,10 @@ import java.util.List;
 
 @Repository
 public class MpaDbStorage extends BaseRepository<Mpa> implements MpaStorage {
-    private final static String POST_MPA_QUERY = "INSERT INTO mpas(name) VALUES (?)";
-    private final static String FIND_MPA_QUERY = "SELECT * FROM mpas WHERE mpa_id = ?";
-    private final static String FIND_MPAS_QUERY = "SELECT * FROM mpas";
-    private final static String DELETE_MPA_QUERY = "DELETE FROM mpas WHERE mpa_id = ?";
+    private static final String POST_MPA_QUERY = "INSERT INTO mpas(name) VALUES (?)";
+    private static final String FIND_MPA_QUERY = "SELECT * FROM mpas WHERE mpa_id = ?";
+    private static final String FIND_MPAS_QUERY = "SELECT * FROM mpas";
+    private static final String DELETE_MPA_QUERY = "DELETE FROM mpas WHERE mpa_id = ?";
 
     public MpaDbStorage(JdbcTemplate jdbc, @Qualifier("mpaRowMapper") RowMapper<Mpa> mapper) {
         super(jdbc, mapper);

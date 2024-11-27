@@ -15,13 +15,13 @@ import java.util.List;
 
 @Repository
 public class UserDbStorage extends BaseRepository<User> implements UserStorage {
-    private final static String FIND_USER_QUERY = "SELECT * FROM users WHERE user_id = ?";
-    private final static String FIND_USERS_QUERY = "SELECT * FROM users";
-    private final static String DELETE_USER_QUERY = "DELETE FROM users WHERE user_id = ?";
-    private final static String UPDATE_USER_QUERY = "UPDATE users SET name = ?, login = ?," +
+    private static final String FIND_USER_QUERY = "SELECT * FROM users WHERE user_id = ?";
+    private static final String FIND_USERS_QUERY = "SELECT * FROM users";
+    private static final String DELETE_USER_QUERY = "DELETE FROM users WHERE user_id = ?";
+    private static final String UPDATE_USER_QUERY = "UPDATE users SET name = ?, login = ?," +
             " email = ?, birthday = ?, friend_status = ? " +
             "WHERE user_id = ?";
-    private final static String INSERT_USER_QUERY = "INSERT INTO users(name, login, email, birthday, friend_status)" +
+    private static final String INSERT_USER_QUERY = "INSERT INTO users(name, login, email, birthday, friend_status)" +
             " VALUES (?, ?, ?, ?, ?)";
 
     @Autowired

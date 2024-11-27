@@ -14,7 +14,6 @@ import ru.yandex.practicum.filmorate.storage.film.FilmDbStorage;
 import ru.yandex.practicum.filmorate.storage.film.FilmRowMapper;
 import ru.yandex.practicum.filmorate.storage.filmsgenres.FilmsGenresDbStorage;
 import ru.yandex.practicum.filmorate.storage.filmsgenres.FilmsGenresRowMapper;
-import ru.yandex.practicum.filmorate.storage.filmsgenres.FilmsGenresStorage;
 import ru.yandex.practicum.filmorate.storage.filmslikes.FilmsLikesDbStorage;
 import ru.yandex.practicum.filmorate.storage.filmslikes.FilmsLikesRowMapper;
 import ru.yandex.practicum.filmorate.storage.genre.GenreDbStorage;
@@ -33,10 +32,10 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @AutoConfigureTestDatabase
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @Import({UserRowMapper.class, UserDbStorage.class, FriendListDbStorage.class, FriendListRowMapper.class,
-         FilmRowMapper.class, FilmService.class, FilmsLikesDbStorage.class, FilmsLikesRowMapper.class,
-         GenreRowMapper.class, GenreDbStorage.class, MpaRowMapper.class, MpaDbStorage.class,
-         FilmDbStorage.class, FilmsGenresDbStorage.class, FilmsGenresRowMapper.class})
-class FilmoRateApplicationTests {
+        FilmRowMapper.class, FilmService.class, FilmsLikesDbStorage.class, FilmsLikesRowMapper.class,
+        GenreRowMapper.class, GenreDbStorage.class, MpaRowMapper.class, MpaDbStorage.class,
+        FilmDbStorage.class, FilmsGenresDbStorage.class, FilmsGenresRowMapper.class})
+class FilmorateApplicationTest {
     private final UserDbStorage userStorage;
     private final FriendListDbStorage friendStorage;
     private final FilmsLikesDbStorage likesStorage;
@@ -50,8 +49,8 @@ class FilmoRateApplicationTests {
     Film film2;
     Genre fantasy;
     Genre comedy;
-    Mpa G;
-    Mpa PG;
+    Mpa g;
+    Mpa pg;
 
     @BeforeEach
     public void before() {
@@ -63,13 +62,13 @@ class FilmoRateApplicationTests {
         comedy.setName("comedy");
         genreStorage.postGenre(comedy);
 
-        G = new Mpa();
-        G.setName("G");
-        mpaStorage.postMpa(G);
+        g = new Mpa();
+        g.setName("G");
+        mpaStorage.postMpa(g);
 
-        PG = new Mpa();
-        PG.setName("PG");
-        mpaStorage.postMpa(PG);
+        pg = new Mpa();
+        pg.setName("PG");
+        mpaStorage.postMpa(pg);
 
         user1 = new User();
         user1.setName("test1");
@@ -91,7 +90,7 @@ class FilmoRateApplicationTests {
         film1.setGenres(new ArrayList<>());
         film1.getGenres().add(fantasy);
         film1.setReleaseDate(LocalDate.now());
-        film1.setMpa(G);
+        film1.setMpa(g);
         film1.setDuration(230);
 
         film2 = new Film();
@@ -100,7 +99,7 @@ class FilmoRateApplicationTests {
         film2.setGenres(new ArrayList<>());
         film2.getGenres().add(comedy);
         film2.setReleaseDate(LocalDate.now());
-        film2.setMpa(PG);
+        film2.setMpa(pg);
         film1.setDuration(20);
 
         jdbc.execute("ALTER TABLE users ALTER COLUMN user_id RESTART WITH 1");

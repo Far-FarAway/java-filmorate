@@ -15,14 +15,14 @@ import java.util.List;
 
 @Repository
 public class FilmDbStorage extends BaseRepository<Film> implements FilmStorage {
-    private final static String FIND_FILM_QUERY = "SELECT * FROM films WHERE film_id = ?";
-    private final static String FIND_FILMS_QUERY = "SELECT * FROM films";
-    private final static String DELETE_FILM_QUERY = "DELETE FROM films WHERE film_id = ?";
-    private final static String DELETE_FILM_LIKES_QUERY = "DELETE FROM films_likes WHERE film_id = ?";
-    private final static String UPDATE_FILM_QUERY = "UPDATE films SET name = ?, description = ?," +
+    private static final String FIND_FILM_QUERY = "SELECT * FROM films WHERE film_id = ?";
+    private static final String FIND_FILMS_QUERY = "SELECT * FROM films";
+    private static final String DELETE_FILM_QUERY = "DELETE FROM films WHERE film_id = ?";
+    private static final String DELETE_FILM_LIKES_QUERY = "DELETE FROM films_likes WHERE film_id = ?";
+    private static final String UPDATE_FILM_QUERY = "UPDATE films SET name = ?, description = ?," +
             " release_date = ?, duration = ?, mpa_id = ? " +
             "WHERE film_id = ?";
-    private final static String INSERT_FILM_QUERY = "INSERT INTO films(name, description, release_date, duration," +
+    private static final String INSERT_FILM_QUERY = "INSERT INTO films(name, description, release_date, duration," +
             " mpa_id) " +
             "VALUES (?, ?, ?, ?, ?)";
 
