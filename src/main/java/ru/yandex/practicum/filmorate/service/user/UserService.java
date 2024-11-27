@@ -26,20 +26,10 @@ public class UserService {
 
     public boolean addFriend(int userId, int friendId) {
         log.info("Добавление нового друга");
-        User user = new User();
-        user.setId(userId);
-        User friend = new User();
-        friend.setId(friendId);
-        List<User> usersList = userStorage.getUsers();
-        if (usersList.contains(user)) {
-            if (usersList.contains(friend)) {
-                return friendStorage.addFriend(userId, friendId) == -3;
-            } else {
-                throw new NotFoundException("Друг с id " + userId + " не найден");
-            }
-        } else {
-            throw new NotFoundException("Пользователь с id " + userId + " не найден");
+        if (checkUser(userId) && checkUser(friendId)) {
+            return friendStorage.addFriend(userId, friendId) == -3;
         }
+        throw new InternalServerException("Не удалось добавить друга");
     }
 
     public List<User> getFriends(int userId) {
@@ -77,5 +67,15 @@ public class UserService {
     public boolean deleteUser(int userId) {
         friendStorage.deleteUser(userId);
         return userStorage.deleteUser(userId);
+    }
+
+    public boolean checkUser(int userId) {
+        User user = new User();
+        user.setId(userId);
+        if(userStorage.getUsers().contains(user)) {
+            return true;
+        } else {
+            throw new NotFoundException("Пользователь с id " + userId + " не найден");
+        }
     }
 }
