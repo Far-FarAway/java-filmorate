@@ -20,27 +20,26 @@ public class UserService {
         return friendListStorage.addFriend(userId, friendId);
     }
 
-    public Map<String, List<String>> getFriends(int userId, FriendListStorage friendListStorage) {
+    public List<User> getFriends(int userId, FriendListStorage friendListStorage) {
         log.info("Получение списка друзей пользователя с id {}", userId);
-        Map<String, List<String>> friendList = new HashMap<>();
-        List<String> list = new ArrayList<>();
+        List<User> list = new ArrayList<>();
 
         for(FriendList friend : friendListStorage.getFriends(userId)) {
-            list.add(friend.getFriend().getLogin());
-            friendList.put(friend.getUser().getLogin(), list);
+            list.add(friend.getFriend());
         }
 
-        return friendList;
+        return list;
     }
 
-    public List<String> getCommonFriends(int userId, int friendId, FriendListStorage friendListStorage) {
+    public List<User> getCommonFriends(int userId, int friendId, FriendListStorage friendListStorage) {
         log.info("Получение списка общих друзей пользователя(id: {}) с другом(id: {})", userId, friendId);
-        List<String> userFriendList = getFriends(userId, friendListStorage).get(userId);
-        List<String> friendListsOfFriend = getFriends(friendId, friendListStorage).get(friendId);
+        List<User> userFriendList = getFriends(userId, friendListStorage);
+        List<User> friendListsOfFriend = getFriends(friendId, friendListStorage);
 
-        List<String> commonFriendList = new ArrayList<>();
-        for(String friend : friendListsOfFriend) {
-            if (userFriendList.contains(friend)) {
+        List<User> commonFriendList = new ArrayList<>();
+
+        for(User friend : userFriendList) {
+            if (friendListsOfFriend.contains(friend)) {
                 commonFriendList.add(friend);
             }
         }
