@@ -1,6 +1,7 @@
 package ru.yandex.practicum.filmorate.service.user;
 
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exception.InternalServerException;
@@ -14,27 +15,35 @@ import java.util.*;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class UserService {
-    public int addFriend(int userId, int friendId, FriendListStorage friendListStorage) {
-        log.info("Добавление нового друга");
-        return friendListStorage.addFriend(userId, friendId);
+    private final UserStorage userStorage;
+    private final FriendListStorage friendStorage;
+
+    public User getUser(int userId) {
+        return userStorage.findById(userId);
     }
 
-    public List<User> getFriends(int userId, FriendListStorage friendListStorage) {
+    public int addFriend(int userId, int friendId) {
+        log.info("Добавление нового друга");
+        return friendStorage.addFriend(userId, friendId);
+    }
+
+    public List<User> getFriends(int userId) {
         log.info("Получение списка друзей пользователя с id {}", userId);
         List<User> list = new ArrayList<>();
 
-        for(FriendList friend : friendListStorage.getFriends(userId)) {
+        for(FriendList friend : friendStorage.getFriends(userId)) {
             list.add(friend.getFriend());
         }
 
         return list;
     }
 
-    public List<User> getCommonFriends(int userId, int friendId, FriendListStorage friendListStorage) {
+    public List<User> getCommonFriends(int userId, int friendId) {
         log.info("Получение списка общих друзей пользователя(id: {}) с другом(id: {})", userId, friendId);
-        List<User> userFriendList = getFriends(userId, friendListStorage);
-        List<User> friendListsOfFriend = getFriends(friendId, friendListStorage);
+        List<User> userFriendList = getFriends(userId);
+        List<User> friendListsOfFriend = getFriends(friendId);
 
         List<User> commonFriendList = new ArrayList<>();
 
@@ -47,8 +56,13 @@ public class UserService {
         return commonFriendList;
     }
 
-    public boolean deleteFriend(int userId, int friendId, FriendListStorage friendListStorage) {
+    public boolean deleteFriend(int userId, int friendId) {
         log.info("Удаление из списка друзей пользователя(id: {}) друга с id {}", userId, friendId);
-        return friendListStorage.deleteFriend(userId, friendId);
+        return friendStorage.deleteFriend(userId, friendId);
+    }
+
+    public boolean deleteUser(int userId) {
+        friendStorage.deleteUser(userId);
+        return userStorage.deleteUser(userId);
     }
 }
