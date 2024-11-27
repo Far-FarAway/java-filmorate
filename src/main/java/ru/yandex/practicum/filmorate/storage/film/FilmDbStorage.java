@@ -58,23 +58,23 @@ public class FilmDbStorage extends BaseRepository<Film> implements FilmStorage {
     }
 
     public Film updateFilm(Film film, Film oldFilm) {
-        //deleteFilm(film.getId());
-        Integer mpaId = null;
-
-        if (oldFilm.getMpa() != null) {
-            mpaId = oldFilm.getMpa().getId();
-        }
 
         film.setName(film.getName().isBlank() ? oldFilm.getName() : film.getName());
         film.setDescription(film.getDescription().isBlank() ? oldFilm.getDescription() : film.getDescription());
-        film.setMpa(film.getMpa() == null ? oldFilm.getMpa() : film.getMpa());
+
+        Integer mpaId = null;
+        if (film.getMpa() == null) {
+            if (oldFilm.getMpa() != null) {
+                mpaId = oldFilm.getMpa().getId();
+            }
+        }
 
         update(UPDATE_FILM_QUERY,
                 film.getName(),
                 film.getDescription(),
                 Timestamp.from(film.getReleaseDate().atStartOfDay(ZoneId.systemDefault()).toInstant()),
                 film.getDuration(),
-                film.getMpa() == null ? mpaId : film.getMpa().getId(),
+                mpaId,
                 film.getId());
 
         return film;
