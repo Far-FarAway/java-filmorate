@@ -24,9 +24,9 @@ public class UserService {
         return userStorage.findById(userId);
     }
 
-    public int addFriend(int userId, int friendId) {
+    public boolean addFriend(int userId, int friendId) {
         log.info("Добавление нового друга");
-        return friendStorage.addFriend(userId, friendId);
+        return friendStorage.addFriend(userId, friendId) == -3;
     }
 
     public List<User> getFriends(int userId) {
