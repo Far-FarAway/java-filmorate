@@ -17,6 +17,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -26,12 +27,15 @@ public class FilmService {
     private final FilmsGenresStorage filmsGenresStorage;
     private final GenreStorage genreStorage;
     private final MpaStorage mpaStorage;
+    private final FilmsLikesStorage likesStorage;
 
     public List<Film> getFilms() {
         List<Film> filmList = filmStorage.getFilms();
         filmList.forEach(film -> {
-            if (film.getGenres() != null) {
-                List<FilmsGenres> filmsGenres = filmsGenresStorage.getGenreByFilm(film.getId());
+            List<FilmsGenres> filmsGenres = filmsGenresStorage.getGenreByFilm(film.getId());
+            film.setGenres(new ArrayList<>());
+
+            if (filmsGenres != null) {
                 for (FilmsGenres filmGenres : filmsGenres) {
                     film.getGenres().add(genreStorage.getGenre(filmGenres.getGenreId()));
                 }
@@ -121,7 +125,7 @@ public class FilmService {
         return likeStorage.deleteLike(filmId, userId);
     }
 
-    public Set<Film> getPopularFilms(int count, FilmStorage storage, FilmsLikesStorage likesStorage) {
+    public List<Film> getPopularFilms(int count) {
         Comparator<Film> comparator = new Comparator<Film>() {
             @Override
             public int compare(Film o1, Film o2) {
@@ -130,10 +134,20 @@ public class FilmService {
             }
         };
 
-        Set<Film> list = new TreeSet<>(comparator);
-        list.addAll(storage.getFilms());
+        List<Film> resultFilms = new ArrayList<>();
 
-        return list;
+        if (likesStorage.getLikes().size() > 1) {
+            resultFilms.addAll(getFilms());
+            resultFilms.sort(comparator);
+        } else {
+            resultFilms.addAll(getFilms());
+        }
+
+        if (resultFilms.size() >= count) {
+            return resultFilms.subList(0, count);
+        } else {
+            return resultFilms;
+        }
     }
 
     public Map<String, List<String>> getLikes(FilmsLikesStorage filmsLikesStorage) {
@@ -180,7 +194,7 @@ public class FilmService {
             throw new ConditionNotMetException("Дата не может быть раньше 12.28.1985");
         }
 
-        if (!mpaStorage.getMpas().contains(film.getMpa())) {
+        if (film.getMpa() != null && !mpaStorage.getMpas().contains(film.getMpa())) {
             throw new ConditionNotMetException("Рейтинга с  таким id " + film.getMpa().getId() + " не существует ");
         }
 
