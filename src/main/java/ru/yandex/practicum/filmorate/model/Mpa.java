@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
-@EqualsAndHashCode(of = {"name"})
+@EqualsAndHashCode(of = {"id"})
 public class Mpa {
     @PositiveOrZero
     private int id;
