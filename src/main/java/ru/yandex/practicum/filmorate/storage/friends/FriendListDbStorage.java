@@ -14,6 +14,7 @@ public class FriendListDbStorage extends BaseRepository<FriendList> implements F
     private final static String ADD_FRIEND_QUERY = "INSERT INTO friends(user_id, friend_id) VALUES (?, ?)";
     private final static String DELETE_FRIEND_QUERY = "DELETE FROM friends WHERE user_id = ? AND friend_id = ?";
     private final static String FIND_FRIENDS_QUERY = "SELECT * FROM friends WHERE user_id = ?";
+    private final static String DELETE_USER_QUERY = "DELETE FROM friends WHERE user_id = ?";
 
     public FriendListDbStorage(JdbcTemplate jdbc, @Qualifier("friendListRowMapper") RowMapper<FriendList> mapper) {
         super(jdbc, mapper);
@@ -25,6 +26,10 @@ public class FriendListDbStorage extends BaseRepository<FriendList> implements F
 
     public boolean deleteFriend(int userId, int friendId) {
         return delete(DELETE_FRIEND_QUERY, userId, friendId);
+    }
+
+    public boolean deleteUser(int userId) {
+        return delete(DELETE_USER_QUERY, userId);
     }
 
     public List<FriendList> getFriends(int userId) {
