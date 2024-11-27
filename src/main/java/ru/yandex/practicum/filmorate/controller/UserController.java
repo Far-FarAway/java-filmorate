@@ -51,7 +51,7 @@ public class UserController {
     }
 
     @PutMapping
-    public boolean updateUser(@RequestBody User user) {
+    public User updateUser(@RequestBody User user) {
         return userStorage.updateUser(user);
     }
 

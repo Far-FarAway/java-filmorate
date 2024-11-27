@@ -48,15 +48,23 @@ public class UserDbStorage extends BaseRepository<User> implements UserStorage{
          return user;
     }
 
-    public boolean updateUser(User user) {
+    public User updateUser(User user) {
         User oldUser = findById(user.getId());
-        return update(UPDATE_USER_QUERY,
-                user.getName().isBlank() ? oldUser.getName() : user.getName(),
-                user.getLogin().isBlank() ? oldUser.getLogin() : user.getLogin(),
-                user.getEmail().isBlank() ? oldUser.getEmail() : user.getEmail(),
+
+        user.setName(user.getName().isBlank() ? oldUser.getName() : user.getName());
+        user.setLogin(user.getLogin().isBlank() ? oldUser.getLogin() : user.getLogin());
+        user.setEmail(user.getEmail().isBlank() ? oldUser.getEmail() : user.getEmail());
+        user.setFriendStatus(user.getFriendStatus() == null ? null : user.getFriendStatus());
+
+        update(UPDATE_USER_QUERY,
+                user.getName(),
+                user.getLogin(),
+                user.getEmail(),
                 Timestamp.from(user.getBirthday().atStartOfDay(ZoneId.systemDefault()).toInstant()),
                 user.getFriendStatus() == null ? null : user.getFriendStatus().toString(),
                 user.getId());
+
+        return user;
     }
 
     public boolean deleteUser(int userId) {
