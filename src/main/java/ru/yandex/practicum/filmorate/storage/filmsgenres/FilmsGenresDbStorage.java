@@ -14,6 +14,8 @@ import java.util.List;
 public class FilmsGenresDbStorage extends BaseRepository<FilmsGenres> implements FilmsGenresStorage {
     private final static String ADD_GENRE_TO_FILM_QUERY = "INSERT INTO films_genres(film_id, genre_id) VALUES (?, ?)";
     private final static String FIND_GENRES_BY_FILM_QUERY = "SELECT * FROM films_genres WHERE film_id = ?";
+    private final static String UPDATE_GENRES_BY_FILM_QUERY = "UPDATE films_genres SET film_id = ?, genre_id = ? " +
+            "WHERE film_id = ? AND genre_id = ?";
     private final static String DELETE_GENRES_BY_FILM_QUERY =
             "DELETE FROM films_genres WHERE film_id = ? AND genre_id = ?";
     @Autowired
@@ -29,5 +31,14 @@ public class FilmsGenresDbStorage extends BaseRepository<FilmsGenres> implements
     }
     public boolean deleteGenreByFilm(int filmId, int genreId) {
         return delete(DELETE_GENRES_BY_FILM_QUERY, filmId, genreId);
+    }
+
+    public FilmsGenres updateGenre(int filmId, int genreId, int newFilmId, int newGenreId) {
+        update(UPDATE_GENRES_BY_FILM_QUERY, filmId, genreId, newFilmId, newGenreId);
+        FilmsGenres filmsGenres = new FilmsGenres();
+        filmsGenres.setFilmId(newFilmId);
+        filmsGenres.setGenreId(newGenreId);
+
+        return filmsGenres;
     }
 }
