@@ -3,6 +3,8 @@ package ru.yandex.practicum.filmorate.service.film;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ru.yandex.practicum.filmorate.exception.ConditionNotMetException;
+import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.*;
 import ru.yandex.practicum.filmorate.storage.film.FilmStorage;
 import ru.yandex.practicum.filmorate.storage.filmsgenres.FilmsGenresStorage;
@@ -11,6 +13,7 @@ import ru.yandex.practicum.filmorate.storage.genre.GenreStorage;
 import ru.yandex.practicum.filmorate.storage.mpa.MpaStorage;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
 
@@ -21,6 +24,7 @@ public class FilmService {
     private final FilmStorage filmStorage;
     private final FilmsGenresStorage filmsGenresStorage;
     private final GenreStorage genreStorage;
+    private final MpaStorage mpaStorage;
 
     public List<Film> getFilms() {
         List<Film> filmList = filmStorage.getFilms();
@@ -34,6 +38,8 @@ public class FilmService {
     }
 
     public Film postFilm(Film film) {
+        validateData(film);
+
         List<Genre> filmsGenres = film.getGenres();
         Film resultFilm = null;
 
@@ -55,6 +61,8 @@ public class FilmService {
     }
 
     public Film updateFilm(Film film) {
+        validateData(film);
+        
         Film oldFilm = filmStorage.findById(film.getId());
         List<Genre> oldGenres = oldFilm.getGenres();
         List<Genre> genres = film.getGenres();
@@ -158,6 +166,23 @@ public class FilmService {
 
     public Mpa getMpaByFilm(int filmId, FilmStorage filmStorage) {
         return filmStorage.findById(filmId).getMpa();
+    }
+
+
+    public void validateData(Film film) {
+        if (film.getReleaseDate().isBefore(LocalDate.of(1895, 12, 28))) {
+            throw new ConditionNotMetException("Дата не может быть раньше 12.28.1985");
+        }
+
+        if (!mpaStorage.getMpas().contains(film.getMpa())) {
+            throw new ConditionNotMetException("Рейтинга с  таким id " + film.getMpa().getId() + " не существует ");
+        }
+
+        for(Genre genre : film.getGenres()) {
+            if (!genreStorage.getGenres().contains(genre)) {
+                throw new ConditionNotMetException("Жанра с таким id " + genre.getId() + " не существует");
+            }
+        }
     }
 
 }
