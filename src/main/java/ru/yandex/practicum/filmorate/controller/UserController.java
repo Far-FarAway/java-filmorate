@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import ru.yandex.practicum.filmorate.annotation.OnCreate;
 import ru.yandex.practicum.filmorate.model.User;
-import ru.yandex.practicum.filmorate.service.user.UserService;
+import ru.yandex.practicum.filmorate.service.user.UserDbService;
 import ru.yandex.practicum.filmorate.storage.user.UserStorage;
 
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
 @Validated
 public class UserController {
     private final UserStorage userStorage;
-    private final UserService userService;
+    private final UserDbService userService;
 
     @GetMapping
     public List<User> getUsers() {

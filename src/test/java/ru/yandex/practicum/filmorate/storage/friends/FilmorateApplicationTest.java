@@ -9,7 +9,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.core.JdbcTemplate;
 import ru.yandex.practicum.filmorate.model.*;
-import ru.yandex.practicum.filmorate.service.film.FilmService;
+import ru.yandex.practicum.filmorate.service.film.FilmDbService;
 import ru.yandex.practicum.filmorate.storage.film.FilmDbStorage;
 import ru.yandex.practicum.filmorate.storage.film.FilmRowMapper;
 import ru.yandex.practicum.filmorate.storage.filmsgenres.FilmsGenresDbStorage;
@@ -32,7 +32,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @AutoConfigureTestDatabase
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @Import({UserRowMapper.class, UserDbStorage.class, FriendListDbStorage.class, FriendListRowMapper.class,
-        FilmRowMapper.class, FilmService.class, FilmsLikesDbStorage.class, FilmsLikesRowMapper.class,
+        FilmRowMapper.class, FilmDbService.class, FilmsLikesDbStorage.class, FilmsLikesRowMapper.class,
         GenreRowMapper.class, GenreDbStorage.class, MpaRowMapper.class, MpaDbStorage.class,
         FilmDbStorage.class, FilmsGenresDbStorage.class, FilmsGenresRowMapper.class})
 class FilmorateApplicationTest {
@@ -41,7 +41,7 @@ class FilmorateApplicationTest {
     private final FilmsLikesDbStorage likesStorage;
     private final GenreDbStorage genreStorage;
     private final MpaDbStorage mpaStorage;
-    private final FilmService filmService;
+    private final FilmDbService filmService;
     private final JdbcTemplate jdbc;
     User user1;
     User user2;

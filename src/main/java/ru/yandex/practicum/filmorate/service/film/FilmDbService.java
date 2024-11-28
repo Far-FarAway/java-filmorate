@@ -17,7 +17,7 @@ import java.util.*;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class FilmService {
+public class FilmDbService {
     private final FilmStorage filmStorage;
     private final FilmsGenresStorage filmsGenresStorage;
     private final GenreStorage genreStorage;

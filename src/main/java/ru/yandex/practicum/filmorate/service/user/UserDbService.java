@@ -14,7 +14,7 @@ import java.util.*;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class UserService {
+public class UserDbService {
     private final UserStorage userStorage;
     private final FriendListStorage friendStorage;
 
