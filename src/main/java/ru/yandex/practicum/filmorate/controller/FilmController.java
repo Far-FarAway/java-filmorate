@@ -19,7 +19,7 @@ import ru.yandex.practicum.filmorate.service.film.FilmService;
 @AllArgsConstructor
 @Validated
 public class FilmController {
-    FilmService filmService;
+    private final FilmService filmService;
 
     @GetMapping
     public List<Film> getFilms() {
