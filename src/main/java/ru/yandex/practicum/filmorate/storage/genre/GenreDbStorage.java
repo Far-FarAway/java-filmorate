@@ -24,7 +24,7 @@ public class GenreDbStorage extends BaseRepository<Genre> implements GenreStorag
     }
 
     public Genre postGenre(Genre genre) {
-        if (!getGenres().contains(genre)) {
+        if (findMany(FIND_GENRE_QUERY, genre.getId()).isEmpty()) {
             int id = insert(POST_GENRE_QUERY, genre.getName());
             genre.setId(id);
             return genre;
