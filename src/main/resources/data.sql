@@ -51,7 +51,7 @@ INSERT INTO mpas(name)
 SELECT 'G'
 WHERE NOT EXISTS (
   SELECT name
-  FROM genres
+  FROM mpas
   WHERE name = 'G'
 );
 
@@ -59,7 +59,7 @@ INSERT INTO mpas(name)
 SELECT 'PG'
 WHERE NOT EXISTS (
   SELECT name
-  FROM genres
+  FROM mpas
   WHERE name = 'PG'
 );
 
@@ -67,7 +67,7 @@ INSERT INTO mpas(name)
 SELECT 'PG-13'
 WHERE NOT EXISTS (
   SELECT name
-  FROM genres
+  FROM mpas
   WHERE name = 'PG-13'
 );
 
@@ -75,7 +75,7 @@ INSERT INTO mpas(name)
 SELECT 'R'
 WHERE NOT EXISTS (
   SELECT name
-  FROM genres
+  FROM mpas
   WHERE name = 'R'
 );
 
@@ -83,6 +83,6 @@ INSERT INTO mpas(name)
 SELECT 'NC-17'
 WHERE NOT EXISTS (
   SELECT name
-  FROM genres
+  FROM mpas
   WHERE name = 'NC-17'
 );
