@@ -23,7 +23,7 @@ public class MpaDbStorage extends BaseRepository<Mpa> implements MpaStorage {
     }
 
     public Mpa postMpa(Mpa mpa) {
-        if (!findMany(FIND_MPA_QUERY, mpa.getId()).isEmpty()) {
+        if (findMany(FIND_MPA_QUERY, mpa.getId()).isEmpty()) {
             int id = insert(POST_MPA_QUERY, mpa.getName());
             mpa.setId(id);
             return mpa;
