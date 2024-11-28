@@ -12,14 +12,14 @@ import ru.yandex.practicum.filmorate.annotation.OnCreate;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.Genre;
 import ru.yandex.practicum.filmorate.model.Mpa;
-import ru.yandex.practicum.filmorate.service.film.FilmDbService;
+import ru.yandex.practicum.filmorate.service.film.FilmService;
 
 @RestController
 @RequestMapping("/films")
 @AllArgsConstructor
 @Validated
 public class FilmController {
-    private final FilmDbService filmService;
+    private final FilmService filmService;
 
     @GetMapping
     public List<Film> getFilms() {
