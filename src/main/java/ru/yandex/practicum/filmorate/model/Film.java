@@ -6,24 +6,24 @@ import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.List;
 
 @Data
 public class Film {
     @PositiveOrZero
-    int id;
+    private int id;
     @NotNull(groups = {OnCreate.class})
     @NotBlank(groups = {OnCreate.class})
-    String name;
-    @NotNull(groups = {OnCreate.class})
-    @NotBlank(groups = {OnCreate.class})
+    private String name;
     @Size(max = 200)
-    String description;
+    @NotNull(groups = {OnCreate.class})
+    @NotBlank(groups = {OnCreate.class})
+    private String description;
     @NotNull(groups = {OnCreate.class})
     @PastOrPresent
-    LocalDate releaseDate;
+    private LocalDate releaseDate;
     @PositiveOrZero
     int duration;
-    Set<Integer> likes = new TreeSet<>();
+    private List<Genre> genres;
+    private Mpa mpa;
 }

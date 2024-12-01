@@ -21,6 +21,12 @@ public class ErrorHandler {
     }
 
     @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleDuplicateDataException(final DuplicateDataException ex) {
+        return new ErrorResponse("Дублирование данных: " + ex.getMessage());
+    }
+
+    @ExceptionHandler({Throwable.class, InternalServerException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleUnexpectedException(final Throwable ex) {
         return new ErrorResponse("Произошла непредвиденная ошибка: " + ex.getMessage());
